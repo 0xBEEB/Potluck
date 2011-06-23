@@ -1,4 +1,13 @@
 potluck
 Copyright 2011 Thomas Schreiber <ubiquill@gmail.com>
 
-A manager for the AUR in Archlinux.
+A front-end to the popular Archlinux package manager, pacman. Potluck manages 
+updates and new package installs for the user in a convenient Qt4 interface. 
+Written in python, potluck takes advantage of the C library functions that are 
+a part of pacman. As well as making standard package management more 
+convenient, potluck also extends functionality similarly to yaourt to the Arch 
+User Repository (AUR) which holds a collection of user submitted build scripts 
+for various source tar-balls across the web. Potluck uses the AUR api to 
+seamlessly integrate the AUR with the rest of the Archlinux repositories. The 
+user can vote on build scripts and create their own. Allowing them to be part 
+of the community package "potluck".
