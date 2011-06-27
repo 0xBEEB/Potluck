@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
 # Thomas Schreiber 2011 <ubiquill@gmail.com>
 
-# aur.py
+# query.py
 #
-# A collection of functions to help search the AUR
+# Query the repositories and AUR
 
 import sys
 import os
@@ -17,8 +17,11 @@ from twisted.python.util import println
 class queryAUR:
     """Searches the AUR using the scripting API"""
 
-    def __init__(self):
+    def __init__(self, term):
         self.AURURL = 'http://aur.archlinux.org/rpc.php?type=search&arg='
+        self.query = []
+        self.search(term)
+
 
     def search(self, term):
         queryURL = self.AURURL + term
@@ -29,16 +32,22 @@ class queryAUR:
 
         reactor.run()
 
+
     def decodeResponse(self, value):
         jsonValue = json.loads(value);
-        for app in jsonValue['results']:
+        self.query = jsonValue['results']
+
+
+    def printQuery(self):
+        for app in self.query:
             print 'aur/' + app['Name'] + ' ' + app['Version']
             print '    ' + app['Description']
         #print jsonValue['results']
 
+
+
 if (__name__ == "__main__"):
   
-
     if (len(sys.argv) <= 1):
         sys.exit()
     else:
@@ -46,5 +55,6 @@ if (__name__ == "__main__"):
  
     os.system('/usr/bin/pacman -Ss ' + argument)
 
-    query = queryAUR()
-    query.search(argument)
+    query = queryAUR(argument)
+    query.printQuery()
+
