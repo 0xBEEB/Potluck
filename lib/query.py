@@ -58,3 +58,4 @@ if (__name__ == "__main__"):
     query = queryAUR(argument)
     query.printQuery()
 
+# vim: set ts=2 sw=2 noet:
