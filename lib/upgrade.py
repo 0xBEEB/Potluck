@@ -26,6 +26,7 @@
 import sys
 import os
 import json
+import urllib
 
 from twisted.internet import reactor
 from twisted.web.client import getPage
@@ -60,8 +61,8 @@ class UpgradeAUR:
 
 
     def getPkgbuild(self, target):
-        # Download pkgbuild
-        pass
+        pkgbuildURL = 'http://aur.archlinux.org/packages/' + target + '/PKGBUILD'
+        urllib.urlretrieve(pkgbuildURL, '/home/ubiquill/PKGBUILD')
 
 
     def getSource(self, target):
