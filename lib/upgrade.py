@@ -39,14 +39,14 @@ class UpgradeAUR:
 
 
     def downloadPkgbuild(self, target):
+        self.AURURL = 'http://aur.archlinux.org'
         self.getPkgInfo(target)
         self.getPkgbuild(target)
-        self.getSource(target)
 
     def getPkgInfo(self, target):
-        AURURL = 'http://aur.archlinux.org/rpc.php?type=info&arg='
+        AURSearchURL = self.AURURL + '/rpc.php?type=info&arg='
         self.info = []
-        infoURL = AURURL + target
+        infoURL = AURSearchURL + target
 
         getPage(infoURL).addCallbacks(
             callback=lambda value:(self.decodeResponse(value), reactor.stop()),
@@ -55,19 +55,15 @@ class UpgradeAUR:
         reactor.run()
 
     def decodeResponse(self, value):
-        print value
-        #jsonValue = json.loads(value)
-        #self.info = jsonValue['results']
+        self.info = json.loads(value)
+        response = self.info['results']
+        self.pkgURL = self.AURURL + response['URLPath']
 
 
     def getPkgbuild(self, target):
-        pkgbuildURL = 'http://aur.archlinux.org/packages/' + target + '/PKGBUILD'
-        urllib.urlretrieve(pkgbuildURL, '/home/ubiquill/PKGBUILD')
+        pkgbuildURL = self.AURURL + '/packages/' + target + '/PKGBUILD'
+        urllib.urlretrieve(pkgbuildURL, 'PKGBUILD')
 
-
-    def getSource(self, target):
-        # Download source
-        pass
 
 
     
