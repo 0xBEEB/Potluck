@@ -32,6 +32,7 @@ from twisted.internet import reactor
 from twisted.web.client import getPage
 from twisted.python.util import println
 
+
 class UpgradeAUR:
 
     def __init__(self, target):
@@ -63,8 +64,6 @@ class UpgradeAUR:
     def getPkgbuild(self, target):
         pkgbuildURL = self.AURURL + '/packages/' + target + '/PKGBUILD'
         urllib.urlretrieve(pkgbuildURL, 'PKGBUILD')
-
-
 
     
 if __name__ == '__main__':
