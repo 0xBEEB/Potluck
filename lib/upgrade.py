@@ -37,6 +37,7 @@ class UpgradeAUR:
 
     def __init__(self, target):
         self.downloadPkgbuild(target)
+        self.makePkg()
 
 
     def downloadPkgbuild(self, target):
@@ -65,6 +66,9 @@ class UpgradeAUR:
         pkgbuildURL = self.AURURL + '/packages/' + target + '/PKGBUILD'
         urllib.urlretrieve(pkgbuildURL, 'PKGBUILD')
 
+
+    def makePkg(self):
+        os.system('makepkg -s PKGBUILD')
     
 if __name__ == '__main__':
     upgrade = UpgradeAUR(sys.argv[1])
