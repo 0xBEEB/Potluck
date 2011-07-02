@@ -17,28 +17,4 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# MainWindow.py
-# by Thomas Schreiber <ubiquill@gmail.com>
-#
-# The main window for potluck, an AUR GUI frontend.
-
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
-from protoUi import Ui_MainWindow
-
-import os, sys
-from aur import *
-
-class Main(QMainWindow):
-    def __init__(self):
-        QMainWindow.__init__(self)
-
-        self.ui=Ui_MainWindow()
-        self.ui.setupUi(self)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    mw = Main()
-    mw.show()
-    sys.exit(app.exec_())
+# This file is needed by python to properly create te aur module.

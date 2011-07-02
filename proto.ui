@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Potluck</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -27,7 +27,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="queryEdit">
          <property name="inputMask">
           <string/>
          </property>
@@ -46,7 +46,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTreeWidget" name="treeWidget">
+      <widget class="QTreeWidget" name="queryList">
        <property name="uniformRowHeights">
         <bool>true</bool>
        </property>
