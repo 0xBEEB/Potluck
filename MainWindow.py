@@ -24,12 +24,16 @@
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
+from protoUi import Ui_MainWindow
 
-import sys
+import os, sys
 
 class Main(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
+
+        self.ui=Ui_MainWindow()
+        self.ui.setupUi(self)
 
 
 if __name__ == '__main__':
