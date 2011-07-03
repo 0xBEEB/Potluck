@@ -36,6 +36,12 @@ class Main(QMainWindow):
         self.ui=Ui_MainWindow()
         self.ui.setupUi(self)
 
+        query = Query.QueryAUR('conky')
+        
+        for q in query.query:
+            item = QTreeWidgetItem([' ', q['Name'], q['Description']])
+            self.ui.queryList.addTopLevelItem(item)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

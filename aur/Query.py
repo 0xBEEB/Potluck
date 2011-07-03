@@ -31,7 +31,7 @@ from twisted.web.client import getPage
 from twisted.python.util import println
 
 
-class queryAUR:
+class QueryAUR:
     """Searches the AUR using the scripting API"""
 
     def __init__(self, term):
@@ -72,7 +72,7 @@ if (__name__ == "__main__"):
  
     os.system('/usr/bin/pacman -Ss ' + argument)
 
-    query = queryAUR(argument)
+    query = QueryAUR(argument)
     query.printQuery()
 
 # vim: set ts=2 sw=2 noet:

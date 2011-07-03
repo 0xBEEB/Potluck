@@ -18,3 +18,5 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 # This file is needed by python to properly create te aur module.
+
+__all__ = ["Query", "Upgrade"]
