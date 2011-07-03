@@ -36,11 +36,17 @@ class Main(QMainWindow):
         self.ui=Ui_MainWindow()
         self.ui.setupUi(self)
 
-        query = Query.QueryAUR('conky')
+        QObject.connect(self.ui.queryButton, SIGNAL('clicked()'), self.newSearch)
+
+
+    def newSearch(self):
+        self.ui.queryList.clear()
+        query = Query.QueryAUR(str(self.ui.queryEdit.text()))
         
         for q in query.query:
             item = QTreeWidgetItem([' ', q['Name'], q['Description']])
             self.ui.queryList.addTopLevelItem(item)
+
 
 
 if __name__ == '__main__':
