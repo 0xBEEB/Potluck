@@ -40,12 +40,15 @@ class Main(QMainWindow):
 
 
     def newSearch(self):
+        self.ui.queryButton.setEnabled(False)
         self.ui.queryList.clear()
         query = Query.QueryAUR(str(self.ui.queryEdit.text()))
         
         for q in query.query:
             item = QTreeWidgetItem([' ', q['Name'], q['Description']])
             self.ui.queryList.addTopLevelItem(item)
+
+        self.ui.queryButton.setEnabled(True)
 
 
 
