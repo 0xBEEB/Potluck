@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'proto.ui'
 #
-# Created: Tue Jul  5 11:29:41 2011
+# Created: Tue Jul  5 11:45:51 2011
 #      by: PyQt4 UI code generator 4.8.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,14 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
+        MainWindow.setWindowModality(QtCore.Qt.NonModal)
         MainWindow.resize(439, 414)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setCursor(QtCore.Qt.ArrowCursor)
         self.centralwidget = QtGui.QWidget(MainWindow)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -51,8 +58,12 @@ class Ui_MainWindow(object):
         self.queryList.setUniformRowHeights(True)
         self.queryList.setColumnCount(3)
         self.queryList.setObjectName(_fromUtf8("queryList"))
-        self.queryList.header().setDefaultSectionSize(100)
+        self.queryList.header().setCascadingSectionResizes(True)
+        self.queryList.header().setDefaultSectionSize(75)
+        self.queryList.header().setHighlightSections(True)
+        self.queryList.header().setMinimumSectionSize(5)
         self.queryList.header().setSortIndicatorShown(True)
+        self.queryList.header().setStretchLastSection(True)
         self.verticalLayout.addWidget(self.queryList)
         MainWindow.setCentralWidget(self.centralwidget)
 
