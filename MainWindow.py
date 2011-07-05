@@ -49,6 +49,7 @@ class Main(QMainWindow):
         
         for q in query.query:
             item = QTreeWidgetItem([' ', q['Name'], q['Description']])
+            item.setCheckState(0,Qt.Unchecked)
             self.ui.queryList.addTopLevelItem(item)
 
         self.ui.queryButton.setEnabled(True)
