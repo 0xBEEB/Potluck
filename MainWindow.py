@@ -27,6 +27,8 @@ from PyQt4.QtCore import *
 from protoUi import Ui_MainWindow
 
 import os, sys
+import string
+import shlex, subprocess
 from aur import *
 
 class Main(QMainWindow):
@@ -45,11 +47,17 @@ class Main(QMainWindow):
         self.ui.queryButton.setEnabled(False)
         self.ui.statusBar.showMessage(QString('Searching...'), 20)
         self.ui.queryList.clear()
+
+        cmdOutput = subprocess.check_output(["pacman", "-Qeq"])
+        installed = string.split(cmdOutput, '\n')
         query = Query.QueryAUR(str(self.ui.queryEdit.text()))
         
         for q in query.query:
             item = QTreeWidgetItem([' ', q['Name'], q['Description']])
-            item.setCheckState(0,Qt.Unchecked)
+            if q['Name'] in installed:
+                item.setCheckState(0,Qt.Checked)
+            else:
+                item.setCheckState(0,Qt.Unchecked)
             self.ui.queryList.addTopLevelItem(item)
 
         self.ui.queryButton.setEnabled(True)
