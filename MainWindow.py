@@ -43,6 +43,7 @@ class Main(QMainWindow):
 
     def newSearch(self):
         self.ui.queryButton.setEnabled(False)
+        self.ui.statusBar.showMessage(QString('Searching...'), 20)
         self.ui.queryList.clear()
         query = Query.QueryAUR(str(self.ui.queryEdit.text()))
         
