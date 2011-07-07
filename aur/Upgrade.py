@@ -33,20 +33,22 @@ import subprocess
 class UpgradeAUR:
 
     def __init__(self, target):
-        self.downloadPkgbuild(target)
-        self.getDepends(target)
+        self.target = target
+        self.downloadPkgbuild()
+        self.buildDepends = self.getBuildDepends()
+        self.depends = self.getDepends()
         #self.makePkg()
 
 
-    def downloadPkgbuild(self, target):
+    def downloadPkgbuild(self):
         self.AURURL = 'http://aur.archlinux.org'
-        self.getPkgInfo(target)
-        self.getPkgbuild(target)
+        self.getPkgInfo()
+        self.getPkgbuild()
 
-    def getPkgInfo(self, target):
+    def getPkgInfo(self):
         AURSearchURL = self.AURURL + '/rpc.php?type=info&arg='
         self.info = []
-        infoURL = AURSearchURL + target
+        infoURL = AURSearchURL + self.target
 
         value = urllib.urlopen(infoURL).read()
         self.decodeResponse(value)
@@ -58,15 +60,24 @@ class UpgradeAUR:
         self.pkgURL = self.AURURL + response['URLPath']
 
 
-    def getPkgbuild(self, target):
-        pkgbuildURL = self.AURURL + '/packages/' + target + '/PKGBUILD'
-        urllib.urlretrieve(pkgbuildURL, target + '.PKGBUILD')
+    def getPkgbuild(self):
+        pkgbuildURL = self.AURURL + '/packages/' + self.target + '/PKGBUILD'
+        urllib.urlretrieve(pkgbuildURL, self.target + '.PKGBUILD')
 
-    def getDepends(self, target):
-        retCode = subprocess.call(["chmod", "+x", target + ".PKGBUILD"])
-        dependsString = subprocess.check_output(["./getDepends.sh", target])
-        self.depends = list(dependsString.split())
-        print self.depends
+
+    def getDepends(self):
+        retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
+        dependsString = subprocess.check_output(["./getDepends.sh", self.target])
+        depends = list(dependsString.split())
+        return depends
+
+
+    def getBuildDepends(self):
+        retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
+        dependsString = subprocess.check_output(["./getBuildDepends.sh", self.target])
+        buildDepends = list(dependsString.split())
+        return buildDepends
+
 
     def makePkg(self):
         os.system('makepkg -s PKGBUILD')
