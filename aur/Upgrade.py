@@ -28,11 +28,6 @@ import os
 import json
 import urllib
 
-from twisted.internet import reactor
-from twisted.web.client import getPage
-from twisted.python.util import println
-
-
 class UpgradeAUR:
 
     def __init__(self, target):
@@ -50,9 +45,8 @@ class UpgradeAUR:
         self.info = []
         infoURL = AURSearchURL + target
 
-        getPage(infoURL).addCallbacks(
-            callback=lambda value:(self.decodeResponse(value), reactor.stop()),
-            errback=lambda error:(println("an error occured",error),reactor.stop()))
+        value = urllib.urlopen(infoURL).read()
+        self.decodeResponse(value)
 
         reactor.run()
 
