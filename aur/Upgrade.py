@@ -25,14 +25,17 @@
 
 import sys
 import os
+import stat
 import json
 import urllib
+import subprocess
 
 class UpgradeAUR:
 
     def __init__(self, target):
         self.downloadPkgbuild(target)
-        self.makePkg()
+        self.getDepends(target)
+        #self.makePkg()
 
 
     def downloadPkgbuild(self, target):
@@ -48,7 +51,6 @@ class UpgradeAUR:
         value = urllib.urlopen(infoURL).read()
         self.decodeResponse(value)
 
-        reactor.run()
 
     def decodeResponse(self, value):
         self.info = json.loads(value)
@@ -58,8 +60,13 @@ class UpgradeAUR:
 
     def getPkgbuild(self, target):
         pkgbuildURL = self.AURURL + '/packages/' + target + '/PKGBUILD'
-        urllib.urlretrieve(pkgbuildURL, 'PKGBUILD')
+        urllib.urlretrieve(pkgbuildURL, target + '.PKGBUILD')
 
+    def getDepends(self, target):
+        retCode = subprocess.call(["chmod", "+x", target + ".PKGBUILD"])
+        dependsString = subprocess.check_output(["./getDepends.sh", target])
+        self.depends = list(dependsString.split())
+        print self.depends
 
     def makePkg(self):
         os.system('makepkg -s PKGBUILD')
