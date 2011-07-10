@@ -26,7 +26,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from protoUi import Ui_MainWindow
 
-import os, sys
+import os, sys, time
 import string
 import shlex, subprocess
 from aur import *
@@ -44,23 +44,55 @@ class Main(QMainWindow):
 
 
     def newSearch(self):
-        self.ui.queryButton.setEnabled(False)
-        self.ui.statusBar.showMessage(QString('Searching...'), 20)
+        self.busy = QProgressDialog(QString("Getting Package Information..."), QString("Cancel"), 0, 0, self)
+        self.busy.setWindowModality(Qt.WindowModal)
+        self.busy.setAutoReset(True)
+        self.busy.setAutoClose(True)
+        self.busy.setMinimum(0)
+        self.busy.setMaximum(0)
+        self.busy.resize(220,120)
+        self.busy.setWindowTitle("Searching...")
         self.ui.queryList.clear()
 
+        self.q = runQuery(self)
+
+        self.busy.show()
+        self.busy.setValue(0)
+        app.processEvents()
+
+        self.q.getQuery()
+
+        while (self.q.finished == False):
+            app.processEvents()
+        self.busy.hide()
+
+
+class runQuery(QThread):
+    def __init__(self, mw):
+        QThread.__init__(self, None)
+        self.mw = mw
+        self.finished = False
+
+
+    def getQuery(self):
+        app.processEvents()
         cmdOutput = subprocess.check_output(["pacman", "-Qeq"])
+        app.processEvents()
         installed = string.split(cmdOutput, '\n')
-        query = Query.QueryAUR(str(self.ui.queryEdit.text()))
+        app.processEvents()
+        query = Query.QueryAUR(str(self.mw.ui.queryEdit.text()))
+        self.mw.busy.setLabelText(QString("Parsing Repsonse..."))
         
         for q in query.query:
+            app.processEvents()
             item = QTreeWidgetItem([' ', q['Name'], q['Description']])
             if q['Name'] in installed:
                 item.setCheckState(0,Qt.Checked)
             else:
                 item.setCheckState(0,Qt.Unchecked)
-            self.ui.queryList.addTopLevelItem(item)
+            self.mw.ui.queryList.addTopLevelItem(item)
+        self.finished = True
 
-        self.ui.queryButton.setEnabled(True)
 
 
 
