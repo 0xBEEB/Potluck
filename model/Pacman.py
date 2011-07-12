@@ -92,12 +92,12 @@ def search(term):
                 if line[0:10] == 'Repository':
                     d['repo'] = line[17:]
                 if line[0:4] == 'Name':
-                    d['name'] = line[17:]
+                    d['Name'] = line[17:]
                 if line[0:13] == 'Download Size':
                     d['dsize'] = line[17:]
                 if line[0:14] == 'Installed Size':
                     d['isize'] = line[17:]
                 if line[0:11] == 'Description':
-                    d['description'] = line[17:]
+                    d['Description'] = line[17:]
             result.append(d)
     return result

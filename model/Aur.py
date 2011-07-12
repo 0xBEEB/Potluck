@@ -30,7 +30,7 @@ import stat
 import subprocess
 
 
-class QueryAUR:
+class Query:
     """Searches the AUR using the scripting API"""
 
     def __init__(self, term):
@@ -60,7 +60,7 @@ class QueryAUR:
 
 
 
-class UpgradeAUR:
+class Upgrade:
 
     def __init__(self, target):
         self.target = target
