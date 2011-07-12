@@ -24,12 +24,12 @@
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
-from protoUi import Ui_MainWindow
+from view.protoUi import Ui_MainWindow
 
 import os, sys, time
 import string
 import shlex, subprocess
-from aur import *
+from model.Aur import *
 
 class Main(QMainWindow):
     def __init__(self):
