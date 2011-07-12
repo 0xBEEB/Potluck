@@ -26,6 +26,8 @@ import sys
 import os
 import json
 import urllib
+import stat
+import subprocess
 
 
 class QueryAUR:
@@ -54,6 +56,63 @@ class QueryAUR:
             print 'aur/' + app['Name'] + ' ' + app['Version']
             print '    ' + app['Description']
         #print jsonValue['results']
+
+
+
+
+class UpgradeAUR:
+
+    def __init__(self, target):
+        self.target = target
+        self.downloadPkgbuild()
+        self.buildDepends = self.getBuildDepends()
+        self.depends = self.getDepends()
+        #self.makePkg()
+
+
+    def downloadPkgbuild(self):
+        self.AURURL = 'http://aur.archlinux.org'
+        self.getPkgInfo()
+        self.getPkgbuild()
+
+    def getPkgInfo(self):
+        AURSearchURL = self.AURURL + '/rpc.php?type=info&arg='
+        self.info = []
+        infoURL = AURSearchURL + self.target
+
+        value = urllib.urlopen(infoURL).read()
+        self.decodeResponse(value)
+
+
+    def decodeResponse(self, value):
+        self.info = json.loads(value)
+        response = self.info['results']
+        self.pkgURL = self.AURURL + response['URLPath']
+
+
+    def getPkgbuild(self):
+        pkgbuildURL = self.AURURL + '/packages/' + self.target + '/PKGBUILD'
+        urllib.urlretrieve(pkgbuildURL, self.target + '.PKGBUILD')
+
+
+    def getDepends(self):
+        retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
+        dependsString = subprocess.check_output(["./scripts/getDepends.sh", self.target])
+        depends = list(dependsString.split())
+        return depends
+
+
+    def getBuildDepends(self):
+        retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
+        dependsString = subprocess.check_output(["./scripts/getBuildDepends.sh", self.target])
+        buildDepends = list(dependsString.split())
+        return buildDepends
+
+
+    def makePkg(self):
+        os.system('makepkg -s PKGBUILD')
+
+
 
 
 
