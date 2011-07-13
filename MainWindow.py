@@ -25,6 +25,7 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from view.protoUi import Ui_MainWindow
+from view.Dialogs import searchDialog
 
 import os, sys, time
 import string
@@ -44,16 +45,8 @@ class Main(QMainWindow):
 
 
     def newSearch(self):
-        self.busy = QProgressDialog(QString("Searching..."), QString("Cancel"), 0, 0, self)
-        self.busy.setWindowModality(Qt.WindowModal)
-        self.busy.setAutoReset(True)
-        self.busy.setAutoClose(True)
-        self.busy.setMinimum(0)
-        self.busy.setMaximum(0)
-        self.busy.resize(220,120)
-        self.busy.setWindowTitle("Searching...")
+        self.busy = searchDialog(self)
         self.ui.queryList.clear()
-        self.busy.setValue(0)
 
         self.busy.show()
         self.busy.setValue(0)

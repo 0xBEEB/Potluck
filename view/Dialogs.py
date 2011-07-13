@@ -17,6 +17,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-# This file is needed by python to properly create te aur module.
+# potluck
+# by Thomas Schreiber <ubiquill@gmail.com>
 
-__all__ = ["protUi, Dialogs"]
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+
+
+class searchDialog(QProgressDialog):
+    def __init__(self, parent):
+        QProgressDialog.__init__(self, parent)
+        #QProgressDialog(QString("Searching..."), QString("Cancel"), 0, 0, self)
+        self.setLabel(QLabel(QString("Searching...")))
+        self.setWindowModality(Qt.WindowModal)
+        self.setAutoReset(True)
+        self.setAutoClose(True)
+        self.setMinimum(0)
+        self.setMaximum(0)
+        self.resize(220,120)
+        self.setWindowTitle("Searching...")
