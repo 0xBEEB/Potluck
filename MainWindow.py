@@ -54,14 +54,13 @@ class Main(QMainWindow):
         self.busy.setWindowTitle("Searching...")
         self.ui.queryList.clear()
         self.busy.setValue(0)
-        app.processEvents()
 
         self.busy.show()
         self.busy.setValue(0)
-        app.processEvents()
 
         self.q = runQuery(self)
         self.connect(self.q, SIGNAL("update(PyQt_PyObject)"), self.displaySearch)
+        self.connect(self.busy, SIGNAL("canceled()"), self.cancelSearch)
         self.q.begin()
 
     def displaySearch(self, response):
@@ -73,6 +72,10 @@ class Main(QMainWindow):
                 item.setCheckState(0,Qt.Unchecked)
             self.ui.queryList.addTopLevelItem(item)
         self.busy.hide()
+
+    def cancelSearch(self):
+        self.q.terminate()
+        self.q = None
 
 
 
