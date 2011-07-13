@@ -80,7 +80,12 @@ def install(name):
 
 def search(term):
     result = []
-    output = subprocess.check_output(["pacman", "-Ssq", term])
+
+    try:
+        output = subprocess.check_output(["pacman", "-Ssq", term])
+    except subprocess.CalledProcessError:
+        output = ''
+
     matches = string.split(output, '\n')
    
     for match in matches:

@@ -51,14 +51,16 @@ class Transaction:
 
         aurQuery = Aur.Query(term)
         aurList = aurQuery.query
-        for app in aurList:
-            item = app
-            item['repo'] = 'aur'
-            if item['Name'] in installedList:
-                item['Installed'] = True
-            else:
-                item['Installed'] = False
-            result.append(app)
+
+        if isinstance(aurList, list):
+            for app in aurList:
+                item = app
+                item['repo'] = 'aur'
+                if item['Name'] in installedList:
+                    item['Installed'] = True
+                else:
+                    item['Installed'] = False
+                result.append(app)
 
         self.queryResult = result
         
