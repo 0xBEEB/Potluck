@@ -29,7 +29,7 @@ from view.protoUi import Ui_MainWindow
 import os, sys, time
 import string
 import shlex, subprocess
-from model.Aur import *
+from model.Transaction import Transaction
 
 class Main(QMainWindow):
     def __init__(self):
@@ -44,7 +44,7 @@ class Main(QMainWindow):
 
 
     def newSearch(self):
-        self.busy = QProgressDialog(QString("Getting Package Information..."), QString("Cancel"), 0, 0, self)
+        self.busy = QProgressDialog(QString("Searching..."), QString("Cancel"), 0, 0, self)
         self.busy.setWindowModality(Qt.WindowModal)
         self.busy.setAutoReset(True)
         self.busy.setAutoClose(True)
@@ -53,45 +53,45 @@ class Main(QMainWindow):
         self.busy.resize(220,120)
         self.busy.setWindowTitle("Searching...")
         self.ui.queryList.clear()
-
-        self.q = runQuery(self)
+        self.busy.setValue(0)
+        app.processEvents()
 
         self.busy.show()
         self.busy.setValue(0)
         app.processEvents()
 
-        self.q.getQuery()
+        self.q = runQuery(self)
+        self.connect(self.q, SIGNAL("update(PyQt_PyObject)"), self.displaySearch)
+        self.q.begin()
 
-        while (self.q.finished == False):
-            app.processEvents()
+    def displaySearch(self, response):
+        for q in response:
+            item = QTreeWidgetItem([' ', q['Name'], q['Description']])
+            if q['Installed'] == True:
+                item.setCheckState(0,Qt.Checked)
+            else:
+                item.setCheckState(0,Qt.Unchecked)
+            self.ui.queryList.addTopLevelItem(item)
         self.busy.hide()
+
 
 
 class runQuery(QThread):
     def __init__(self, mw):
-        QThread.__init__(self, None)
+        QThread.__init__(self)
         self.mw = mw
-        self.finished = False
 
 
-    def getQuery(self):
-        app.processEvents()
-        cmdOutput = subprocess.check_output(["pacman", "-Qeq"])
-        app.processEvents()
-        installed = string.split(cmdOutput, '\n')
-        app.processEvents()
-        query = Query.QueryAUR(str(self.mw.ui.queryEdit.text()))
-        self.mw.busy.setLabelText(QString("Parsing Repsonse..."))
+    def run(self):
+        self.t = Transaction()
+        self.t.query(unicode(mw.ui.queryEdit.text().toUtf8()))
+        self.emit(SIGNAL('update(PyQt_PyObject)'), self.t.queryResult)
+        return
         
-        for q in query.query:
-            app.processEvents()
-            item = QTreeWidgetItem([' ', q['Name'], q['Description']])
-            if q['Name'] in installed:
-                item.setCheckState(0,Qt.Checked)
-            else:
-                item.setCheckState(0,Qt.Unchecked)
-            self.mw.ui.queryList.addTopLevelItem(item)
-        self.finished = True
+
+
+    def begin(self):
+        self.start()
 
 
 
