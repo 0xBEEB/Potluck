@@ -36,3 +36,18 @@ class searchDialog(QProgressDialog):
         self.setMaximum(0)
         self.resize(220,120)
         self.setWindowTitle("Searching...")
+
+
+
+
+class syncDialog(QProgressDialog):
+    def __init__(self, parent):
+        QProgressDialog.__init__(self, parent)
+        self.setLabel(QLabel(QString("Syncing...")))
+        self.setWindowModality(Qt.WindowModal)
+        self.setAutoReset(True)
+        self.setAutoClose(True)
+        self.setMinimum(0)
+        self.setMaximum(0)
+        self.resize(220,120)
+        self.setWindowTitle("Syncing...")

@@ -35,7 +35,7 @@ def sync():
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
     else:
-        output = subprocess.check_output(["pacman", "-Syy"])
+        output = subprocess.call(["pacman", "-Syy"])
 
 
 def getInstalled():

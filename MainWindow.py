@@ -26,6 +26,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from view.mwUi import Ui_MainWindow
 from view.Dialogs import searchDialog
+from view.Dialogs import syncDialog
 
 import os, sys, time
 import string
@@ -45,6 +46,7 @@ class Main(QMainWindow):
         QObject.connect(self.ui.queryButton, SIGNAL('clicked()'), self.newSearch)
         QObject.connect(self.ui.queryEdit, SIGNAL('returnPressed()'), 
                         self.ui.queryButton, SIGNAL('clicked()'))
+        QObject.connect(self.ui.actionSync, SIGNAL('triggered()'), self.newSync)
         QObject.connect(self.ui.quitButton, SIGNAL('clicked()'), self.checkQuit)
 
 
@@ -59,6 +61,22 @@ class Main(QMainWindow):
         self.connect(self.q, SIGNAL("update(PyQt_PyObject)"), self.displaySearch)
         self.connect(self.busy, SIGNAL("canceled()"), self.cancelSearch)
         self.q.begin()
+
+
+    def newSync(self):
+        self.sync = syncDialog(self)
+        self.sync.show()
+        self.sync.setValue(0)
+
+        self.thread = runSync(self)
+        self.connect(self.sync, SIGNAL("canceled()"), self.finishSync)
+        self.connect(self.sync, SIGNAL("finishedSync()"), self.finishSync)
+        self.thread.start()
+
+
+    def finishSync(self):
+        self.thread.terminate()
+        self.sync.hide()
 
 
     def displaySearch(self, response):
@@ -97,6 +115,20 @@ class runQuery(QThread):
 
     def begin(self):
         self.start()
+
+
+
+class runSync(QThread):
+    def __init__(self, mw):
+        QThread.__init__(self)
+        self.mw = mw
+
+
+    def run(self):
+        self.t = Transaction()
+        self.t.sync()
+        self.mw.sync.hide()
+        return
 
 
 
