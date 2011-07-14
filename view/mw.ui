@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Potluck</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/potlucklogo.png</normaloff>:/icons/potlucklogo.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -225,6 +229,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mw.ui'
 #
-# Created: Wed Jul 13 23:07:36 2011
+# Created: Wed Jul 13 23:36:05 2011
 #      by: PyQt4 UI code generator 4.8.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,6 +25,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setCursor(QtCore.Qt.ArrowCursor)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/potlucklogo.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(MainWindow)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -127,3 +130,4 @@ class Ui_MainWindow(object):
         self.actionClear_Changes.setText(QtGui.QApplication.translate("MainWindow", "Clear Changes", None, QtGui.QApplication.UnicodeUTF8))
         self.actionClear_Changes.setToolTip(QtGui.QApplication.translate("MainWindow", "Undo All Changes", None, QtGui.QApplication.UnicodeUTF8))
 
+import icons_rc
