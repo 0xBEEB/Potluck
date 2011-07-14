@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mw.ui'
 #
-# Created: Wed Jul 13 23:36:05 2011
+# Created: Thu Jul 14 10:29:52 2011
 #      by: PyQt4 UI code generator 4.8.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -81,9 +81,9 @@ class Ui_MainWindow(object):
         self.applyButton = QtGui.QPushButton(self.centralwidget)
         self.applyButton.setObjectName(_fromUtf8("applyButton"))
         self.horizontalLayout_5.addWidget(self.applyButton)
-        self.pushButton_8 = QtGui.QPushButton(self.centralwidget)
-        self.pushButton_8.setObjectName(_fromUtf8("pushButton_8"))
-        self.horizontalLayout_5.addWidget(self.pushButton_8)
+        self.quitButton = QtGui.QPushButton(self.centralwidget)
+        self.quitButton.setObjectName(_fromUtf8("quitButton"))
+        self.horizontalLayout_5.addWidget(self.quitButton)
         self.gridLayout.addLayout(self.horizontalLayout_5, 3, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusBar = QtGui.QStatusBar(MainWindow)
@@ -119,7 +119,7 @@ class Ui_MainWindow(object):
         self.queryList.headerItem().setText(2, QtGui.QApplication.translate("MainWindow", "Name", None, QtGui.QApplication.UnicodeUTF8))
         self.queryList.headerItem().setText(3, QtGui.QApplication.translate("MainWindow", "Description", None, QtGui.QApplication.UnicodeUTF8))
         self.applyButton.setText(QtGui.QApplication.translate("MainWindow", "Apply", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_8.setText(QtGui.QApplication.translate("MainWindow", "Quit", None, QtGui.QApplication.UnicodeUTF8))
+        self.quitButton.setText(QtGui.QApplication.translate("MainWindow", "Quit", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSync.setText(QtGui.QApplication.translate("MainWindow", "Sync", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSync.setToolTip(QtGui.QApplication.translate("MainWindow", "Refresh Package Database", None, QtGui.QApplication.UnicodeUTF8))

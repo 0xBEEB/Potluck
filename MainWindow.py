@@ -42,6 +42,7 @@ class Main(QMainWindow):
         QObject.connect(self.ui.queryButton, SIGNAL('clicked()'), self.newSearch)
         QObject.connect(self.ui.queryEdit, SIGNAL('returnPressed()'), 
                         self.ui.queryButton, SIGNAL('clicked()'))
+        QObject.connect(self.ui.quitButton, SIGNAL('clicked()'), self.checkQuit)
 
 
     def newSearch(self):
@@ -56,6 +57,7 @@ class Main(QMainWindow):
         self.connect(self.busy, SIGNAL("canceled()"), self.cancelSearch)
         self.q.begin()
 
+
     def displaySearch(self, response):
         for q in response:
             item = QTreeWidgetItem([' ', q['repo'], q['Name'], q['Description']])
@@ -66,9 +68,14 @@ class Main(QMainWindow):
             self.ui.queryList.addTopLevelItem(item)
         self.busy.hide()
 
+
     def cancelSearch(self):
         self.q.terminate()
         self.q = None
+
+
+    def checkQuit(self):
+        app.quit()
 
 
 
@@ -84,7 +91,6 @@ class runQuery(QThread):
         self.emit(SIGNAL('update(PyQt_PyObject)'), self.t.queryResult)
         return
         
-
 
     def begin(self):
         self.start()
