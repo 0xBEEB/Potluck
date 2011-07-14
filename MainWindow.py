@@ -38,7 +38,10 @@ class Main(QMainWindow):
 
         self.ui=Ui_MainWindow()
         self.ui.setupUi(self)
+        self.makeConnections()
 
+
+    def makeConnections(self):
         QObject.connect(self.ui.queryButton, SIGNAL('clicked()'), self.newSearch)
         QObject.connect(self.ui.queryEdit, SIGNAL('returnPressed()'), 
                         self.ui.queryButton, SIGNAL('clicked()'))
