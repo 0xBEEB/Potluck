@@ -11,3 +11,9 @@ for various source tar-balls across the web. Potluck uses the AUR api to
 seamlessly integrate the AUR with the rest of the Archlinux repositories. The 
 user can vote on build scripts and create their own. Allowing them to be part 
 of the community package "potluck".
+
+Qt Designer - Just some notes on Qt Designer
+So I used Qt Designer to create a lot of the ui elements. So, a few commands
+need to be run to update the ui files that Qt Designer creates.
+$ pyuicy mw.ui -o mwUi.py
+$ pyrcc4 view/icons.qrc -o icons_rc.py
