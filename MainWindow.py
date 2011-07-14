@@ -24,7 +24,7 @@
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
-from view.protoUi import Ui_MainWindow
+from view.mwUi import Ui_MainWindow
 from view.Dialogs import searchDialog
 
 import os, sys, time
@@ -58,7 +58,7 @@ class Main(QMainWindow):
 
     def displaySearch(self, response):
         for q in response:
-            item = QTreeWidgetItem([' ', q['Name'], q['Description']])
+            item = QTreeWidgetItem([' ', q['repo'], q['Name'], q['Description']])
             if q['Installed'] == True:
                 item.setCheckState(0,Qt.Checked)
             else:
