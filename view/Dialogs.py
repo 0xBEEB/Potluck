@@ -51,3 +51,11 @@ class syncDialog(QProgressDialog):
         self.setMaximum(0)
         self.resize(220,120)
         self.setWindowTitle("Syncing...")
+
+class notRoot(QMessageBox):
+    def __init__(self, parent):
+        QMessageBox.__init__(self, parent)
+        self.setDefaultButton(QMessageBox.Ok)
+        self.setWindowModality(Qt.WindowModal)
+        self.setText(QString('You must be root to complete this action'))
+        self.setWindowTitle("Error")

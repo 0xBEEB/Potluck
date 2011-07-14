@@ -27,6 +27,7 @@ from PyQt4.QtCore import *
 from view.mwUi import Ui_MainWindow
 from view.Dialogs import searchDialog
 from view.Dialogs import syncDialog
+from view.Dialogs import notRoot
 
 import os, sys, time
 import string
@@ -64,6 +65,11 @@ class Main(QMainWindow):
 
 
     def newSync(self):
+        if os.geteuid() != 0:
+            self.notroot = notRoot(self)
+            QMessageBox.open(self.notroot)
+            return
+
         self.sync = syncDialog(self)
         self.sync.show()
         self.sync.setValue(0)
