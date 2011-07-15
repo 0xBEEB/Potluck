@@ -75,13 +75,16 @@ class Main(QMainWindow):
         self.sync.setValue(0)
 
         self.thread = runSync(self)
-        self.connect(self.sync, SIGNAL("canceled()"), self.finishSync)
-        self.connect(self.sync, SIGNAL("finishedSync()"), self.finishSync)
-        self.thread.start()
+        self.connect(self.thread, SIGNAL("canceled()"), self.cancelSync)
+        self.connect(self.thread, SIGNAL("finished()"), self.finishSync)
+        self.thread.begin()
 
+
+    def cancelSync(self):
+        self.thread.terminate()
+        self.sync.hide()
 
     def finishSync(self):
-        self.thread.terminate()
         self.sync.hide()
 
 
@@ -133,8 +136,11 @@ class runSync(QThread):
     def run(self):
         self.t = Transaction()
         self.t.sync()
-        self.mw.sync.hide()
         return
+
+
+    def begin(self):
+        self.start()
 
 
 
