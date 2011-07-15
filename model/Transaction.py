@@ -32,6 +32,9 @@ class Transaction:
     def sync(self):
         Pacman.sync()
 
+    def getInstalled(self):
+        return Pacman.getInstalled()
+
 
     #def upgrade(self):
 

@@ -42,13 +42,91 @@ class Main(QMainWindow):
         self.ui.setupUi(self)
         self.makeConnections()
 
+        self.installList = {}
+        self.removeList = {}
+
+        self.changeFont = QFont()
+        self.changeFont.setBold(True)
+        self.Font = QFont()
+        self.Font.setBold(False)
+
 
     def makeConnections(self):
         QObject.connect(self.ui.queryButton, SIGNAL('clicked()'), self.newSearch)
         QObject.connect(self.ui.queryEdit, SIGNAL('returnPressed()'), 
                         self.ui.queryButton, SIGNAL('clicked()'))
         QObject.connect(self.ui.actionSync, SIGNAL('triggered()'), self.newSync)
+        QObject.connect(self.ui.actionView_Changes, SIGNAL('triggered()'), self.viewChanges)
+        QObject.connect(self.ui.actionClear_Changes, SIGNAL('triggered()'), self.clearChanges)
         QObject.connect(self.ui.quitButton, SIGNAL('clicked()'), self.checkQuit)
+        QObject.connect(self.ui.queryList, SIGNAL('itemSelectionChanged()'), self.handleChanges)
+
+
+    def handleChanges(self):
+        t = Transaction()
+        installed = t.getInstalled()
+        it = QTreeWidgetItemIterator(self.ui.queryList)
+        while it.value():
+            if it.value().checkState(0):
+                if it.value().text(2) not in installed:
+                    # set bold
+                    it.value().setFont(1, self.changeFont)
+                    it.value().setFont(2, self.changeFont)
+                    it.value().setFont(3, self.changeFont)
+                    # add to installList
+                    newInstall = {}
+                    newInstall['Checked'] = it.value().checkState(0)
+                    newInstall['repo'] = it.value().text(1)
+                    newInstall['Name'] = it.value().text(2)
+                    newInstall['Description'] = it.value().text(3)
+                    self.installList[it.value().text(2)] = newInstall
+                else:
+                    it.value().setFont(1, self.Font)
+                    it.value().setFont(2, self.Font)
+                    it.value().setFont(3, self.Font)
+                    if self.removeList.has_key(it.value().text(2)):
+                        self.removeList.pop(it.value().text(2))
+            else:
+                if it.value().text(2) in installed:
+                    # set bold
+                    it.value().setFont(1, self.changeFont)
+                    it.value().setFont(2, self.changeFont)
+                    it.value().setFont(3, self.changeFont)
+                    # add to removeList 
+                    newRemove = {}
+                    newRemove['Checked'] = it.value().checkState(0)
+                    newRemove['repo'] = it.value().text(1)
+                    newRemove['Name'] = it.value().text(2)
+                    newRemove['Description'] = it.value().text(3)
+                    self.removeList[it.value().text(2)] = newRemove
+                else:
+                    it.value().setFont(1, self.Font)
+                    it.value().setFont(2, self.Font)
+                    it.value().setFont(3, self.Font)
+                    if self.installList.has_key(it.value().text(2)):
+                        self.installList.pop(it.value().text(2))
+            it += 1
+
+
+    def viewChanges(self):
+        self.ui.queryList.clear()
+        for app in self.installList.values():
+            item = QTreeWidgetItem([' ', app['repo'], app['Name'], app['Description']])
+            item.setCheckState(0,Qt.Checked)
+            self.ui.queryList.addTopLevelItem(item)
+        for app in self.removeList.values():
+            item = QTreeWidgetItem([' ', app['repo'], app['Name'], app['Description']])
+            item.setCheckState(0,Qt.Unchecked)
+            self.ui.queryList.addTopLevelItem(item)
+        self.ui.queryList.sortItems(2, Qt.AscendingOrder)
+        self.handleChanges()
+
+
+    def clearChanges(self):
+        self.installList.clear()
+        self.removeList.clear()
+        self.ui.queryList.clear()
+
 
 
     def newSearch(self):
@@ -96,6 +174,7 @@ class Main(QMainWindow):
             else:
                 item.setCheckState(0,Qt.Unchecked)
             self.ui.queryList.addTopLevelItem(item)
+        self.ui.queryList.sortItems(2, Qt.AscendingOrder)
         self.busy.hide()
 
 
