@@ -69,6 +69,15 @@ def upgrade():
         output = subprocess.check_output(["pacman", "-Syyu", "--noconfirm"])
 
 
+def toBeUpgraded():
+    result = []
+    output = subprocess.check_output(["pacman", "-Quq"])
+    output = output.splitlines()
+    for app in output:
+        result.append(getPkgInfo(app))
+    return result
+
+
 def install(name):
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
@@ -76,6 +85,24 @@ def install(name):
         retValue = subprocess.call(["pacman", "-S", "--noconfirm", name])
     if retValue != 0:
         raise PackageError("Package does not exist")
+
+
+def getPkgInfo(name):
+    d = {}
+    info = subprocess.check_output(["pacman", "-Si", name])
+    info = info.splitlines()
+    for line in info:
+        if line[0:10] == 'Repository':
+            d['repo'] = line[17:]
+        if line[0:4] == 'Name':
+            d['Name'] = line[17:]
+        if line[0:13] == 'Download Size':
+            d['dsize'] = line[17:]
+        if line[0:14] == 'Installed Size':
+            d['isize'] = line[17:]
+        if line[0:11] == 'Description':
+            d['Description'] = line[17:]
+    return d
     
 
 def search(term):
@@ -90,19 +117,5 @@ def search(term):
    
     for match in matches:
         if match != '':
-            d = {}              
-            info = subprocess.check_output(["pacman", "-Si", match])
-            info = info.splitlines()
-            for line in info:
-                if line[0:10] == 'Repository':
-                    d['repo'] = line[17:]
-                if line[0:4] == 'Name':
-                    d['Name'] = line[17:]
-                if line[0:13] == 'Download Size':
-                    d['dsize'] = line[17:]
-                if line[0:14] == 'Installed Size':
-                    d['isize'] = line[17:]
-                if line[0:11] == 'Description':
-                    d['Description'] = line[17:]
-            result.append(d)
+            result.append(getPkgInfo(match))
     return result

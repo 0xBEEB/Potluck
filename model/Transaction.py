@@ -36,6 +36,10 @@ class Transaction:
         return Pacman.getInstalled()
 
 
+    def toBeUpgraded(self):
+        return Pacman.toBeUpgraded()
+
+
     #def upgrade(self):
 
 

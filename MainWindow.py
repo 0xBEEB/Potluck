@@ -58,6 +58,7 @@ class Main(QMainWindow):
         QObject.connect(self.ui.actionSync, SIGNAL('triggered()'), self.newSync)
         QObject.connect(self.ui.actionView_Changes, SIGNAL('triggered()'), self.viewChanges)
         QObject.connect(self.ui.actionClear_Changes, SIGNAL('triggered()'), self.clearChanges)
+        QObject.connect(self.ui.actionUpgrade, SIGNAL('triggered()'), self.markUpgrades)
         QObject.connect(self.ui.quitButton, SIGNAL('clicked()'), self.checkQuit)
         QObject.connect(self.ui.queryList, SIGNAL('itemSelectionChanged()'), self.handleChanges)
 
@@ -65,10 +66,11 @@ class Main(QMainWindow):
     def handleChanges(self):
         t = Transaction()
         installed = t.getInstalled()
+        upgrades = t.toBeUpgraded()
         it = QTreeWidgetItemIterator(self.ui.queryList)
         while it.value():
             if it.value().checkState(0):
-                if it.value().text(2) not in installed:
+                if it.value().text(2) not in installed or it.value().text(2) not in upgrades:
                     # set bold
                     it.value().setFont(1, self.changeFont)
                     it.value().setFont(2, self.changeFont)
@@ -120,6 +122,14 @@ class Main(QMainWindow):
             self.ui.queryList.addTopLevelItem(item)
         self.ui.queryList.sortItems(2, Qt.AscendingOrder)
         self.handleChanges()
+
+
+    def markUpgrades(self):
+        newT = Transaction()
+        upgrades = newT.toBeUpgraded()
+        for app in upgrades:
+            self.installList[app['Name']] = app
+                
 
 
     def clearChanges(self):
