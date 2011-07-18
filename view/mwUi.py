@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mw.ui'
 #
-# Created: Mon Jul 18 16:11:55 2011
+# Created: Mon Jul 18 16:50:05 2011
 #      by: PyQt4 UI code generator 4.8.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -123,7 +123,7 @@ class Ui_MainWindow(object):
         self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSync.setText(QtGui.QApplication.translate("MainWindow", "Sync", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSync.setToolTip(QtGui.QApplication.translate("MainWindow", "Refresh Package Database", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionUpgrade.setText(QtGui.QApplication.translate("MainWindow", "Upgrade", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionUpgrade.setText(QtGui.QApplication.translate("MainWindow", "Mark Upgrades", None, QtGui.QApplication.UnicodeUTF8))
         self.actionUpgrade.setToolTip(QtGui.QApplication.translate("MainWindow", "Upgrade All Currently Installed Applications", None, QtGui.QApplication.UnicodeUTF8))
         self.actionView_Changes.setText(QtGui.QApplication.translate("MainWindow", "View Changes", None, QtGui.QApplication.UnicodeUTF8))
         self.actionView_Changes.setToolTip(QtGui.QApplication.translate("MainWindow", "List All Packages That Will Be Altered", None, QtGui.QApplication.UnicodeUTF8))

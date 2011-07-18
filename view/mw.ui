@@ -206,7 +206,7 @@
   </action>
   <action name="actionUpgrade">
    <property name="text">
-    <string>Upgrade</string>
+    <string>Mark Upgrades</string>
    </property>
    <property name="toolTip">
     <string>Upgrade All Currently Installed Applications</string>
