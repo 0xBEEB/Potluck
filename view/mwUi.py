@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mw.ui'
 #
-# Created: Thu Jul 14 10:29:52 2011
+# Created: Mon Jul 18 16:11:55 2011
 #      by: PyQt4 UI code generator 4.8.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -67,7 +67,7 @@ class Ui_MainWindow(object):
         self.queryList.setObjectName(_fromUtf8("queryList"))
         self.queryList.header().setCascadingSectionResizes(False)
         self.queryList.header().setDefaultSectionSize(75)
-        self.queryList.header().setHighlightSections(True)
+        self.queryList.header().setHighlightSections(False)
         self.queryList.header().setMinimumSectionSize(5)
         self.queryList.header().setSortIndicatorShown(True)
         self.queryList.header().setStretchLastSection(True)
