@@ -50,6 +50,10 @@ class Main(QMainWindow):
         self.Font = QFont()
         self.Font.setBold(False)
 
+        t = Transaction()
+        self.installed = t.getInstalled()
+        self.upgrades = t.toBeUpgraded()
+
 
     def makeConnections(self):
         QObject.connect(self.ui.queryButton, SIGNAL('clicked()'), self.newSearch)
@@ -64,13 +68,10 @@ class Main(QMainWindow):
 
 
     def handleChanges(self):
-        t = Transaction()
-        installed = t.getInstalled()
-        upgrades = t.toBeUpgraded()
         it = QTreeWidgetItemIterator(self.ui.queryList)
         while it.value():
             if it.value().checkState(0):
-                if it.value().text(2) not in installed or it.value().text(2) not in upgrades:
+                if it.value().text(2) not in self.installed and it.value().text(2) not in self.upgrades:
                     # set bold
                     it.value().setFont(1, self.changeFont)
                     it.value().setFont(2, self.changeFont)
@@ -89,7 +90,7 @@ class Main(QMainWindow):
                     if self.removeList.has_key(it.value().text(2)):
                         self.removeList.pop(it.value().text(2))
             else:
-                if it.value().text(2) in installed:
+                if it.value().text(2) in self.installed:
                     # set bold
                     it.value().setFont(1, self.changeFont)
                     it.value().setFont(2, self.changeFont)
