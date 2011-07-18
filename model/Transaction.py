@@ -37,7 +37,11 @@ class Transaction:
 
 
     def toBeUpgraded(self):
-        return Pacman.toBeUpgraded()
+        pacUpgrade =  Pacman.toBeUpgraded()
+        aurUpgrade = Aur.outOfDate()
+        for app in aurUpgrade:
+            pacUpgrade.append(app)
+        return pacUpgrade
 
 
     #def upgrade(self):

@@ -120,6 +120,7 @@ def outOfDate():
     resultList = []
     updateList = []
     response = {}
+    extensiveResponse = {}
     output = subprocess.check_output(["pacman", "-Qm"])
     tempList = output.splitlines()
     for app in tempList:
@@ -133,8 +134,10 @@ def outOfDate():
                 isNew = subprocess.check_output(["vercmp", response['Version'], app[1]])
                 value = isNew.splitlines()
                 if int(value[0]) > 0:
-                    updateList.append(app[0])
+                    response['repo'] = 'aur'
+                    updateList.append(response)
     return updateList
+     
         
 
 
