@@ -29,6 +29,7 @@ import urllib
 import stat
 import subprocess
 
+AURURL = 'http://aur.archlinux.org'
 
 class Query:
     """Searches the AUR using the scripting API"""
@@ -114,6 +115,38 @@ class Upgrade:
 
 
 
+
+def outOfDate():
+    resultList = []
+    updateList = []
+    response = {}
+    output = subprocess.check_output(["pacman", "-Qm"])
+    tempList = output.splitlines()
+    for app in tempList:
+        temp = app.split(' ')
+        resultList.append(temp)
+
+    for app in resultList:
+        response = getPkgInfo(app[0])
+        if isinstance(response, dict):
+            if response['OutOfDate'] != 0:
+                isNew = subprocess.check_output(["vercmp", response['Version'], app[1]])
+                value = isNew.splitlines()
+                if int(value[0]) > 0:
+                    updateList.append(app[0])
+    return updateList
+        
+
+
+def getPkgInfo(target):
+    AURSearchURL = AURURL + '/rpc.php?type=info&arg='
+    info = []
+    infoURL = AURSearchURL + target
+
+    value = urllib.urlopen(infoURL).read()
+    info = json.loads(value)
+    response = info['results']
+    return response
 
 
 if (__name__ == "__main__"):
