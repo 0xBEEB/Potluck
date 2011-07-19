@@ -84,7 +84,6 @@ class Main(QMainWindow):
                     newInstall['repo'] = unicode(it.value().text(1))
                     newInstall['Name'] = unicode(it.value().text(2))
                     newInstall['Description'] = unicode(it.value().text(3))
-                    print appName + "+"
                     if appName not in self.installList:
                         self.installList[appName] = newInstall
                 elif appName in self.upgradeList:
@@ -109,7 +108,6 @@ class Main(QMainWindow):
                     newRemove['repo'] = unicode(it.value().text(1))
                     newRemove['Name'] = unicode(it.value().text(2))
                     newRemove['Description'] = unicode(it.value().text(3))
-                    print appName + "-"
                     if appName not in self.removeList:
                         self.removeList[appName] = newRemove
                 elif appName in self.upgradeList:
