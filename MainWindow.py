@@ -3,6 +3,9 @@
 
 # Copyright © 2011 Thomas Schreiber
 #
+# Contributors:
+#    Greg Haynes
+#
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
@@ -212,6 +215,7 @@ class Main(QMainWindow):
         self.sync.hide()
 
 
+    # contributions by Greg Haynes
     def displaySearch(self, transaction):
         response = transaction.queryResult
         found_exact_match = False
