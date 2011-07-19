@@ -211,7 +211,9 @@ class Main(QMainWindow):
         self.sync.hide()
 
 
-    def displaySearch(self, response):
+    def displaySearch(self, transaction):
+        response = transaction.queryResult
+        found_exact_match = False
         for q in response:
             item = QTreeWidgetItem([' ', unicode(q['repo']), 
                                     unicode(q['Name']), unicode(q['Description'])])
@@ -220,6 +222,8 @@ class Main(QMainWindow):
             else:
                 item.setCheckState(0,Qt.Unchecked)
             self.ui.queryList.addTopLevelItem(item)
+            if not found_exact_match and q['Name'].capitalize() == transaction.query_string.capitalize():
+                item.setSelected(True)
         self.ui.queryList.sortItems(2, Qt.AscendingOrder)
         self.busy.hide()
 
@@ -235,6 +239,7 @@ class Main(QMainWindow):
 
 
 class runQuery(QThread):
+    '''Emits update(Transaction()) when complete.'''
     def __init__(self, mw):
         QThread.__init__(self)
         self.mw = mw
@@ -242,8 +247,9 @@ class runQuery(QThread):
 
     def run(self):
         self.t = Transaction()
-        self.t.query(unicode(mw.ui.queryEdit.text().toUtf8()))
-        self.emit(SIGNAL('update(PyQt_PyObject)'), self.t.queryResult)
+        self.t.query_string = unicode(mw.ui.queryEdit.text().toUtf8())
+        self.t.query(self.t.query_string)
+        self.emit(SIGNAL('update(PyQt_PyObject)'), self.t)
         return
         
 
