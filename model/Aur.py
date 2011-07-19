@@ -68,7 +68,6 @@ class Upgrade:
         self.downloadPkgbuild()
         self.buildDepends = self.getBuildDepends()
         self.depends = self.getDepends()
-        #self.makePkg()
 
 
     def downloadPkgbuild(self):
@@ -150,6 +149,7 @@ def getPkgInfo(target):
     info = json.loads(value)
     response = info['results']
     return response
+
 
 
 if (__name__ == "__main__"):

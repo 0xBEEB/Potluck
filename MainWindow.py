@@ -64,6 +64,7 @@ class Main(QMainWindow):
         QObject.connect(self.ui.actionView_Changes, SIGNAL('triggered()'), self.viewChanges)
         QObject.connect(self.ui.actionClear_Changes, SIGNAL('triggered()'), self.clearChanges)
         QObject.connect(self.ui.actionUpgrade, SIGNAL('triggered()'), self.markUpgrades)
+        QObject.connect(self.ui.applyButton, SIGNAL('clicked()'), self.applyChanges)
         QObject.connect(self.ui.quitButton, SIGNAL('clicked()'), self.checkQuit)
         QObject.connect(self.ui.queryList, SIGNAL('itemSelectionChanged()'), self.handleChanges)
 
@@ -227,6 +228,22 @@ class Main(QMainWindow):
     def cancelSearch(self):
         self.q.terminate()
         self.q = None
+
+
+    def applyChanges(self):
+        print "To be installed:"
+        for app in self.installList.values():
+            print app['Name'] + " ",
+        print ''
+        print "To be upgraded:"
+        for app in self.upgradeList.values():
+            print app['Name'] + " ",
+        print ''
+        print "To be removed:"
+        for app in self.removeList.values():
+            print app['Name'] + " ",
+        print ''
+        
 
 
     def checkQuit(self):

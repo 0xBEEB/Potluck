@@ -27,6 +27,13 @@ from PyQt4.QtGui import *
 class Transaction:
     def __init__(self):
         self.queryResult = []
+        self.repoUpgrades = {}
+        self.aurUpgrades = {}
+        self.repoInstalls = {}
+        self.aurInstalls = {}
+        self.removes = {}
+        self.aurDepends = {}
+        self.aurBuildDepends = {}
         
 
     def sync(self):
@@ -43,6 +50,73 @@ class Transaction:
             pacUpgrade.append(app)
         return pacUpgrade
 
+
+    def changeList(self, installList, upgradeList, removeList):
+        installed = self.getInstalled()
+        for app in  installList.values():
+            if app['repo'] == 'aur':
+                tInfo = Aur.getPkgInfo(app['Name'])
+                self.aurInstalls[app['Name']] = tInfo
+                newU = Aur.Upgrade(app['Name'])
+                for dep in newU.buildDepends:
+                    if dep not in installed:
+                        iDep = Pacman.getPkgInfo(app['Name'])
+                        if isinstance(iDep, dict):
+                            self.aurBuildDepends[app['Name']] = iDep
+                        else:
+                            raise Pacman.PackageError()
+                for dep in newU.depends:
+                    if dep not in installed:
+                        iDep = Pacman.getPkgInfo(app['Name'])
+                        if isinstance(iDep, dict):
+                            self.aurDepends[app['Name']] = iDep
+                        else:
+                            raise Pacman.PackageError()
+            else:
+                tInfo = Pacman.getPkgInfo(app['Name'])
+                self.repoInstalls[app['Name']] = tInfo
+        for app in  upgradeList.values():
+            if app['repo'] == 'aur':
+                tInfo = Aur.getPkgInfo(app['Name'])
+                self.aurUpgrades[app['Name']] = tInfo
+                newU = Aur.Upgrade(app['Name'])
+                for dep in newU.buildDepends:
+                    if dep not in installed:
+                        iDep = Pacman.getPkgInfo(app['Name'])
+                        if isinstance(iDep, dict):
+                            self.aurBuildDepends[app['Name']] = iDep
+                        else:
+                            raise Pacman.PackageError()
+                for dep in newU.depends:
+                    if dep not in installed:
+                        iDep = Pacman.getPkgInfo(app['Name'])
+                        if isinstance(iDep, dict):
+                            self.aurDepends[app['Name']] = iDep
+                        else:
+                            raise Pacman.PackageError()
+            else:
+                tInfo = Pacman.getPkgInfo(app['Name'])
+                self.repoUpgrades[app['Name']] = tInfo
+        for app in  removeList.values():
+            tInfo = Pacman.getPkgInfo(app['Name'])
+            self.removes[app['Name']] = tInfo
+
+        print 'repo Installs'
+        print self.repoInstalls
+        print 'aur installs'
+        print self.aurInstalls
+        print 'repo upgrades'
+        print self.repoUpgrades
+        print 'aur upgrades'
+        print self.aurUpgrades
+        print 'removes'
+        print self.removes
+        print 'aur build deps'
+        print self.aurBuildDepends
+        print 'aur deps'
+        print self.aurDepends
+            
+        
 
     #def upgrade(self):
 
