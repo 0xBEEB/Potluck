@@ -134,7 +134,7 @@ def outOfDate():
                 isNew = subprocess.check_output(["vercmp", response['Version'], app[1]])
                 value = isNew.splitlines()
                 if int(value[0]) > 0:
-                    response['repo'] = 'aur'
+                    response['repo'] = unicode('aur')
                     updateList.append(response)
     return updateList
      

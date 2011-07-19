@@ -41,7 +41,10 @@ def sync():
 def getInstalled():
     cmdOutput = subprocess.check_output(["pacman", "-Qeq"])
     installed = string.split(cmdOutput, '\n')
-    return installed
+    rList = []
+    for app in installed:
+        rList.append(unicode(app))
+    return rList
 
 
 def installed(name):
@@ -93,15 +96,15 @@ def getPkgInfo(name):
     info = info.splitlines()
     for line in info:
         if line[0:10] == 'Repository':
-            d['repo'] = line[17:]
+            d['repo'] = unicode(line[17:])
         if line[0:4] == 'Name':
-            d['Name'] = line[17:]
+            d['Name'] = unicode(line[17:])
         if line[0:13] == 'Download Size':
             d['dsize'] = line[17:]
         if line[0:14] == 'Installed Size':
             d['isize'] = line[17:]
         if line[0:11] == 'Description':
-            d['Description'] = line[17:]
+            d['Description'] = unicode(line[17:])
     return d
     
 

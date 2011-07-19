@@ -54,7 +54,7 @@ class Transaction:
         pDict = Pacman.search(term)
         for app in pDict:
             item = app
-            if item['Name'] in installedList:
+            if item[unicode('Name')] in installedList:
                 item['Installed'] = True
             else:
                 item['Installed'] = False
@@ -66,7 +66,7 @@ class Transaction:
         if isinstance(aurList, list):
             for app in aurList:
                 item = app
-                item['repo'] = 'aur'
+                item['repo'] = unicode('aur')
                 if item['Name'] in installedList:
                     item['Installed'] = True
                 else:
