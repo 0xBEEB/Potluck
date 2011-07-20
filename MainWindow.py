@@ -239,19 +239,9 @@ class Main(QMainWindow):
 
 
     def applyChanges(self):
-        print "To be installed:"
-        for app in self.installList.values():
-            print app['Name'] + " ",
-        print ''
-        print "To be upgraded:"
-        for app in self.upgradeList.values():
-            print app['Name'] + " ",
-        print ''
-        print "To be removed:"
-        for app in self.removeList.values():
-            print app['Name'] + " ",
-        print ''
-        
+        t = Transaction()
+        t.changeList(self.installList, self.upgradeList, self.removeList)
+         
 
 
     def checkQuit(self):
