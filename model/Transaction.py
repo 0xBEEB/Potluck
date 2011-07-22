@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright © 2011 Thomas Schreiber
@@ -20,8 +20,8 @@
 # Potluck
 # by Thomas Schreiber <ubiquill@gmail.com>
 
-import Aur
-import Pacman
+from . import Aur
+from . import Pacman
 from PyQt4.QtGui import * 
 
 class Transaction:
@@ -53,7 +53,7 @@ class Transaction:
 
     def changeList(self, installList, upgradeList, removeList):
         installed = self.getInstalled()
-        for app in  installList.values():
+        for app in  list(installList.values()):
             if app['repo'] == 'aur':
                 tInfo = Aur.getPkgInfo(app['Name'])
                 self.aurInstalls[app['Name']] = tInfo
@@ -75,7 +75,7 @@ class Transaction:
             else:
                 tInfo = Pacman.getPkgInfo(app['Name'])
                 self.repoInstalls[app['Name']] = tInfo
-        for app in  upgradeList.values():
+        for app in  list(upgradeList.values()):
             if app['repo'] == 'aur':
                 tInfo = Aur.getPkgInfo(app['Name'])
                 self.aurUpgrades[app['Name']] = tInfo
@@ -97,24 +97,24 @@ class Transaction:
             else:
                 tInfo = Pacman.getPkgInfo(app['Name'])
                 self.repoUpgrades[app['Name']] = tInfo
-        for app in  removeList.values():
+        for app in  list(removeList.values()):
             tInfo = Pacman.getPkgInfo(app['Name'])
             self.removes[app['Name']] = tInfo
 
-        print 'repo Installs'
-        print self.repoInstalls
-        print 'aur installs'
-        print self.aurInstalls
-        print 'repo upgrades'
-        print self.repoUpgrades
-        print 'aur upgrades'
-        print self.aurUpgrades
-        print 'removes'
-        print self.removes
-        print 'aur build deps'
-        print self.aurBuildDepends
-        print 'aur deps'
-        print self.aurDepends
+        print('repo Installs')
+        print(self.repoInstalls)
+        print('aur installs')
+        print(self.aurInstalls)
+        print('repo upgrades')
+        print(self.repoUpgrades)
+        print('aur upgrades')
+        print(self.aurUpgrades)
+        print('removes')
+        print(self.removes)
+        print('aur build deps')
+        print(self.aurBuildDepends)
+        print('aur deps')
+        print(self.aurDepends)
             
         
 
@@ -128,7 +128,9 @@ class Transaction:
         pDict = Pacman.search(term)
         for app in pDict:
             item = app
-            if item[unicode('Name')] in installedList:
+            if 'Name' not in item:
+                continue
+            if item['Name'] in installedList:
                 item['Installed'] = True
             else:
                 item['Installed'] = False
@@ -140,7 +142,7 @@ class Transaction:
         if isinstance(aurList, list):
             for app in aurList:
                 item = app
-                item['repo'] = unicode('aur')
+                item['repo'] = 'aur'
                 if item['Name'] in installedList:
                     item['Installed'] = True
                 else:

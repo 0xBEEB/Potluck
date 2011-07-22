@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright © 2011 Thomas Schreiber
@@ -28,7 +28,9 @@ class searchDialog(QProgressDialog):
     def __init__(self, parent):
         QProgressDialog.__init__(self, parent)
         #QProgressDialog(QString("Searching..."), QString("Cancel"), 0, 0, self)
-        self.setLabel(QLabel(QString("Searching...")))
+        searchString = str('Searching...')
+        searchLabel = QLabel(searchString)
+        self.setLabel(searchLabel)
         self.setWindowModality(Qt.WindowModal)
         self.setAutoReset(True)
         self.setAutoClose(True)
@@ -43,7 +45,7 @@ class searchDialog(QProgressDialog):
 class syncDialog(QProgressDialog):
     def __init__(self, parent):
         QProgressDialog.__init__(self, parent)
-        self.setLabel(QLabel(QString("Syncing...")))
+        self.setLabel(QLabel(str("Syncing...")))
         self.setWindowModality(Qt.WindowModal)
         self.setAutoReset(True)
         self.setAutoClose(True)
@@ -57,5 +59,5 @@ class notRoot(QMessageBox):
         QMessageBox.__init__(self, parent)
         self.setDefaultButton(QMessageBox.Ok)
         self.setWindowModality(Qt.WindowModal)
-        self.setText(QString('You must be root to complete this action'))
+        self.setText(str('You must be root to complete this action'))
         self.setWindowTitle("Error")

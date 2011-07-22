@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright © 2011 Thomas Schreiber
@@ -75,7 +75,7 @@ class Main(QMainWindow):
     def handleChanges(self):
         it = QTreeWidgetItemIterator(self.ui.queryList)
         while it.value():
-            appName = unicode(it.value().text(2))
+            appName = str(it.value().text(2))
             if it.value().checkState(0):
                 if appName not in self.installed and appName not in self.upgradeList:
                     # set bold
@@ -85,9 +85,9 @@ class Main(QMainWindow):
                     # add to installList
                     newInstall = {}
                     newInstall['Checked'] = it.value().checkState(0)
-                    newInstall['repo'] = unicode(it.value().text(1))
-                    newInstall['Name'] = unicode(it.value().text(2))
-                    newInstall['Description'] = unicode(it.value().text(3))
+                    newInstall['repo'] = str(it.value().text(1))
+                    newInstall['Name'] = str(it.value().text(2))
+                    newInstall['Description'] = str(it.value().text(3))
                     if appName not in self.installList:
                         self.installList[appName] = newInstall
                 elif appName in self.upgradeList:
@@ -109,9 +109,9 @@ class Main(QMainWindow):
                     # add to removeList 
                     newRemove = {}
                     newRemove['Checked'] = it.value().checkState(0)
-                    newRemove['repo'] = unicode(it.value().text(1))
-                    newRemove['Name'] = unicode(it.value().text(2))
-                    newRemove['Description'] = unicode(it.value().text(3))
+                    newRemove['repo'] = str(it.value().text(1))
+                    newRemove['Name'] = str(it.value().text(2))
+                    newRemove['Description'] = str(it.value().text(3))
                     if appName not in self.removeList:
                         self.removeList[appName] = newRemove
                 elif appName in self.upgradeList:
@@ -132,25 +132,25 @@ class Main(QMainWindow):
 
     def viewChanges(self):
         self.ui.queryList.clear()
-        for app in self.installList.values():
-            item = QTreeWidgetItem([' ', unicode(app['repo']), 
-                                    unicode(app['Name']), unicode(app['Description'])])
+        for app in list(self.installList.values()):
+            item = QTreeWidgetItem([' ', app['repo'], 
+                                    app['Name'], app['Description']])
             item.setCheckState(0,Qt.Checked)
             item.setFont(1, self.changeFont)
             item.setFont(2, self.changeFont)
             item.setFont(3, self.changeFont)
             self.ui.queryList.addTopLevelItem(item)
-        for app in self.upgradeList.values():
-            item = QTreeWidgetItem([' ', unicode(app['repo']), 
-                                    unicode(app['Name']), unicode(app['Description'])])
+        for app in list(self.upgradeList.values()):
+            item = QTreeWidgetItem([' ', app['repo'], 
+                                    app['Name'], app['Description']])
             item.setCheckState(0,Qt.Checked)
             item.setFont(1, self.changeFont)
             item.setFont(2, self.changeFont)
             item.setFont(3, self.changeFont)
             self.ui.queryList.addTopLevelItem(item)
-        for app in self.removeList.values():
-            item = QTreeWidgetItem([' ', unicode(app['repo']), 
-                                    unicode(app['Name']), unicode(app['Description'])])
+        for app in list(self.removeList.values()):
+            item = QTreeWidgetItem([' ', app['repo'], 
+                                    app['Name'], app['Description']])
             item.setCheckState(0,Qt.Unchecked)
             item.setFont(1, self.changeFont)
             item.setFont(2, self.changeFont)
@@ -165,8 +165,8 @@ class Main(QMainWindow):
         newT = Transaction()
         upgrades = newT.toBeUpgraded()
         for app in upgrades:
-            if unicode(app['Name']) not in self.installList:
-                self.upgradeList[unicode(app['Name'])] = app
+            if app['Name'] not in self.installList:
+                self.upgradeList[app['Name']] = app
                 
 
 
@@ -220,8 +220,8 @@ class Main(QMainWindow):
         response = transaction.queryResult
         found_exact_match = False
         for q in response:
-            item = QTreeWidgetItem([' ', unicode(q['repo']), 
-                                    unicode(q['Name']), unicode(q['Description'])])
+            item = QTreeWidgetItem([' ', q['repo'], 
+                                    q['Name'], q['Description']])
             if q['Installed'] == True:
                 item.setCheckState(0,Qt.Checked)
             else:
@@ -258,7 +258,7 @@ class runQuery(QThread):
 
     def run(self):
         self.t = Transaction()
-        self.t.query_string = unicode(mw.ui.queryEdit.text().toUtf8())
+        self.t.query_string = str(mw.ui.queryEdit.text())
         self.t.query(self.t.query_string)
         self.emit(SIGNAL('update(PyQt_PyObject)'), self.t)
         return

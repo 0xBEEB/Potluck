@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright © 2011 Thomas Schreiber
@@ -21,7 +21,6 @@
 # by Thomas Schreiber <ubiquill@gmail.com>
 
 import os, subprocess
-import string
 
 
 class PackageError(Exception):
@@ -40,10 +39,11 @@ def sync():
 
 def getInstalled():
     cmdOutput = subprocess.check_output(["pacman", "-Qeq"])
-    installed = string.split(cmdOutput, '\n')
+    cmdOutput = cmdOutput.decode("utf-8")
+    installed = cmdOutput.splitlines()
     rList = []
     for app in installed:
-        rList.append(unicode(app))
+        rList.append(str(app))
     return rList
 
 
@@ -75,6 +75,7 @@ def upgrade():
 def toBeUpgraded():
     result = []
     output = subprocess.check_output(["pacman", "-Quq"])
+    output = output.decode("utf-8")
     output = output.splitlines()
     for app in output:
         result.append(getPkgInfo(app))
@@ -93,18 +94,19 @@ def install(name):
 def getPkgInfo(name):
     d = {}
     info = subprocess.check_output(["pacman", "-Si", name])
+    info = info.decode("utf-8")
     info = info.splitlines()
     for line in info:
         if line[0:10] == 'Repository':
-            d['repo'] = unicode(line[17:])
+            d['repo'] = str(line[17:])
         if line[0:4] == 'Name':
-            d['Name'] = unicode(line[17:])
+            d['Name'] = str(line[17:])
         if line[0:13] == 'Download Size':
             d['dsize'] = line[17:]
         if line[0:14] == 'Installed Size':
             d['isize'] = line[17:]
         if line[0:11] == 'Description':
-            d['Description'] = unicode(line[17:])
+            d['Description'] = str(line[17:])
     return d
     
 
@@ -113,10 +115,11 @@ def search(term):
 
     try:
         output = subprocess.check_output(["pacman", "-Ssq", term])
+        output = output.decode("utf-8")
     except subprocess.CalledProcessError:
         output = ''
 
-    matches = string.split(output, '\n')
+    matches = output.splitlines()
    
     for match in matches:
         if match != '':

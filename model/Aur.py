@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Copyright © 2011 Thomas Schreiber
@@ -25,7 +25,7 @@
 import sys
 import os
 import json
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import stat
 import subprocess
 
@@ -43,19 +43,19 @@ class Query:
     def search(self, term):
         queryURL = self.AURURL + term
 
-        value = urllib.urlopen(queryURL).read()
-        self.decodeResponse(value)
+        value = urllib.request.urlopen(queryURL).read()
+        self.decodeResponse(value.decode("utf-8"))
         
 
     def decodeResponse(self, value):
-        jsonValue = json.loads(value);
+        jsonValue = json.loads(value)
         self.query = jsonValue['results']
 
 
     def printQuery(self):
         for app in self.query:
-            print 'aur/' + app['Name'] + ' ' + app['Version']
-            print '    ' + app['Description']
+            print('aur/' + app['Name'] + ' ' + app['Version'])
+            print('    ' + app['Description'])
         #print jsonValue['results']
 
 
@@ -80,8 +80,8 @@ class Upgrade:
         self.info = []
         infoURL = AURSearchURL + self.target
 
-        value = urllib.urlopen(infoURL).read()
-        self.decodeResponse(value)
+        value = urllib.request.urlopen(infoURL).read()
+        self.decodeResponse(value.decode("utf-8"))
 
 
     def decodeResponse(self, value):
@@ -92,12 +92,13 @@ class Upgrade:
 
     def getPkgbuild(self):
         pkgbuildURL = self.AURURL + '/packages/' + self.target + '/PKGBUILD'
-        urllib.urlretrieve(pkgbuildURL, self.target + '.PKGBUILD')
+        urllib.request.urlretrieve(pkgbuildURL, self.target + '.PKGBUILD')
 
 
     def getDepends(self):
         retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
         dependsString = subprocess.check_output(["./scripts/getDepends.sh", self.target])
+        dependsString = dependsString.decode("utf-8")
         depends = list(dependsString.split())
         return depends
 
@@ -105,6 +106,7 @@ class Upgrade:
     def getBuildDepends(self):
         retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
         dependsString = subprocess.check_output(["./scripts/getBuildDepends.sh", self.target])
+        dependsString = dependsString.decode("utf-8")
         buildDepends = list(dependsString.split())
         return buildDepends
 
@@ -121,6 +123,7 @@ def outOfDate():
     response = {}
     extensiveResponse = {}
     output = subprocess.check_output(["pacman", "-Qm"])
+    output = output.decode("utf-8")
     tempList = output.splitlines()
     for app in tempList:
         temp = app.split(' ')
@@ -131,9 +134,10 @@ def outOfDate():
         if isinstance(response, dict):
             if response['OutOfDate'] != 0:
                 isNew = subprocess.check_output(["vercmp", response['Version'], app[1]])
+                isNew = isNew.decode("utf-8")
                 value = isNew.splitlines()
                 if int(value[0]) > 0:
-                    response['repo'] = unicode('aur')
+                    response['repo'] = 'aur'
                     updateList.append(response)
     return updateList
      
@@ -145,8 +149,8 @@ def getPkgInfo(target):
     info = []
     infoURL = AURSearchURL + target
 
-    value = urllib.urlopen(infoURL).read()
-    info = json.loads(value)
+    value = urllib.request.urlopen(infoURL).read()
+    info = json.loads(value.decode("utf-8"))
     response = info['results']
     return response
 
@@ -164,4 +168,4 @@ if (__name__ == "__main__"):
     query = QueryAUR(argument)
     query.printQuery()
 
-# vim: set ts=2 sw=2 noet:
+# vim: set ts=4 sw=4 noet:
