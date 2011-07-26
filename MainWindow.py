@@ -241,6 +241,7 @@ class Main(QMainWindow):
 
 
     def applyChanges(self):
+        self.handleChanges()
         t = Transaction()
         changes = t.changeList(self.installList, self.upgradeList, self.removeList)
         cWin = ChangeWin(self)

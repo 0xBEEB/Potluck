@@ -105,7 +105,6 @@ class Upgrade:
 
     def getBuildDepends(self):
         retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
-        print(os.pwd())
         dependsString = subprocess.check_output(["./getBuildDepends.sh", self.target])
         dependsString = dependsString.decode("utf-8")
         buildDepends = list(dependsString.split())

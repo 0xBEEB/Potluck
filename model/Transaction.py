@@ -56,7 +56,7 @@ class Transaction:
         for app in  list(installList.values()):
             if app['repo'] == 'aur':
                 tInfo = Aur.getPkgInfo(app['Name'])
-                self.aurInstalls[app['Name']] = tInfo
+                self.aurInstalls[app['Name']] = app
                 newU = Aur.Upgrade(app['Name'])
                 for dep in newU.buildDepends:
                     if dep not in installed:
@@ -78,7 +78,7 @@ class Transaction:
         for app in  list(upgradeList.values()):
             if app['repo'] == 'aur':
                 tInfo = Aur.getPkgInfo(app['Name'])
-                self.aurUpgrades[app['Name']] = tInfo
+                self.aurUpgrades[app['Name']] = app
                 newU = Aur.Upgrade(app['Name'])
                 for dep in newU.buildDepends:
                     if dep not in installed:
@@ -101,6 +101,7 @@ class Transaction:
             tInfo = Pacman.getPkgInfo(app['Name'])
             self.removes[app['Name']] = tInfo
 
+        print(self.aurInstalls)
         rDict = {}
         rDict['repoInstalls'] = self.repoInstalls
         rDict['aurInstalls'] = self.aurInstalls
