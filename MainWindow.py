@@ -173,10 +173,11 @@ class Main(QMainWindow):
 
 
     def clearChanges(self):
+        self.ui.queryList.clear()
         self.installList.clear()
         self.removeList.clear()
         self.upgradeList.clear()
-        self.ui.queryList.clear()
+        self.handleChanges()
 
 
 

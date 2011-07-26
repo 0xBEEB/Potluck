@@ -29,6 +29,13 @@ class PackageError(Exception):
     def __str__(self):
         return repr(self.value)
 
+class NotFoundError(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return repr(self.value)
+
 
 def sync():
     if (os.geteuid() != 0):
@@ -93,21 +100,24 @@ def install(name):
 
 def getPkgInfo(name):
     d = {}
-    info = subprocess.check_output(["pacman", "-Si", name])
-    info = info.decode("utf-8")
-    info = info.splitlines()
-    for line in info:
-        if line[0:10] == 'Repository':
-            d['repo'] = str(line[17:])
-        if line[0:4] == 'Name':
-            d['Name'] = str(line[17:])
-        if line[0:13] == 'Download Size':
-            d['dsize'] = line[17:]
-        if line[0:14] == 'Installed Size':
-            d['isize'] = line[17:]
-        if line[0:11] == 'Description':
-            d['Description'] = str(line[17:])
-    return d
+    try:
+        info = subprocess.check_output(["pacman", "-Si", name])
+        info = info.decode("utf-8")
+        info = info.splitlines()
+        for line in info:
+            if line[0:10] == 'Repository':
+                d['repo'] = str(line[17:])
+            if line[0:4] == 'Name':
+                d['Name'] = str(line[17:])
+            if line[0:13] == 'Download Size':
+                d['dsize'] = line[17:]
+            if line[0:14] == 'Installed Size':
+                d['isize'] = line[17:]
+            if line[0:11] == 'Description':
+                d['Description'] = str(line[17:])
+        return d
+    except subprocess.CalledProcessError:
+        return None
     
 
 def search(term):

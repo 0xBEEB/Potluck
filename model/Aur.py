@@ -97,7 +97,7 @@ class Upgrade:
 
     def getDepends(self):
         retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
-        dependsString = subprocess.check_output(["./getDepends.sh", self.target])
+        dependsString = subprocess.check_output(["./model/getDepends.sh", self.target])
         dependsString = dependsString.decode("utf-8")
         depends = list(dependsString.split())
         return depends
@@ -105,7 +105,7 @@ class Upgrade:
 
     def getBuildDepends(self):
         retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
-        dependsString = subprocess.check_output(["./getBuildDepends.sh", self.target])
+        dependsString = subprocess.check_output(["./model/getBuildDepends.sh", self.target])
         dependsString = dependsString.decode("utf-8")
         buildDepends = list(dependsString.split())
         return buildDepends

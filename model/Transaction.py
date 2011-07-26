@@ -64,14 +64,14 @@ class Transaction:
                         if isinstance(iDep, dict):
                             self.aurBuildDepends[app['Name']] = iDep
                         else:
-                            raise Pacman.PackageError()
+                            raise Pacman.PackageError(dep)
                 for dep in newU.depends:
                     if dep not in installed:
                         iDep = Pacman.getPkgInfo(app['Name'])
                         if isinstance(iDep, dict):
                             self.aurDepends[app['Name']] = iDep
                         else:
-                            raise Pacman.PackageError()
+                            raise Pacman.PackageError(dep)
             else:
                 tInfo = Pacman.getPkgInfo(app['Name'])
                 self.repoInstalls[app['Name']] = tInfo
@@ -86,14 +86,14 @@ class Transaction:
                         if isinstance(iDep, dict):
                             self.aurBuildDepends[app['Name']] = iDep
                         else:
-                            raise Pacman.PackageError()
+                            raise Pacman.PackageError(dep)
                 for dep in newU.depends:
                     if dep not in installed:
                         iDep = Pacman.getPkgInfo(app['Name'])
                         if isinstance(iDep, dict):
                             self.aurDepends[app['Name']] = iDep
                         else:
-                            raise Pacman.PackageError()
+                            raise Pacman.PackageError(dep)
             else:
                 tInfo = Pacman.getPkgInfo(app['Name'])
                 self.repoUpgrades[app['Name']] = tInfo
@@ -101,7 +101,6 @@ class Transaction:
             tInfo = Pacman.getPkgInfo(app['Name'])
             self.removes[app['Name']] = tInfo
 
-        print(self.aurInstalls)
         rDict = {}
         rDict['repoInstalls'] = self.repoInstalls
         rDict['aurInstalls'] = self.aurInstalls
