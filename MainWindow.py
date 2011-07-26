@@ -32,6 +32,8 @@ from view.Dialogs import searchDialog
 from view.Dialogs import syncDialog
 from view.Dialogs import notRoot
 
+from view.Changes import ChangeWin
+
 import os, sys, time
 import string
 import shlex, subprocess
@@ -240,7 +242,10 @@ class Main(QMainWindow):
 
     def applyChanges(self):
         t = Transaction()
-        t.changeList(self.installList, self.upgradeList, self.removeList)
+        changes = t.changeList(self.installList, self.upgradeList, self.removeList)
+        cWin = ChangeWin(self)
+        cWin.setChanges(changes)
+        cWin.show()
          
 
 

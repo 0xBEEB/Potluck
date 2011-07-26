@@ -19,4 +19,4 @@
 
 # This file is needed by python to properly create te aur module.
 
-__all__ = ["mwUi", "protUi, Dialogs"]
+__all__ = ["mwUi", "protUi, Dialogs, Changes"]

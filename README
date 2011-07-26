@@ -15,5 +15,6 @@ of the community package "potluck".
 Qt Designer - Just some notes on Qt Designer
 So I used Qt Designer to create a lot of the ui elements. So, a few commands
 need to be run to update the ui files that Qt Designer creates.
-$ pyuicy mw.ui -o mwUi.py
-$ pyrcc4 view/icons.qrc -o icons_rc.py
+$ pyuicy --from-imports mw.ui -o mwUi.py
+$ pyuicy --from-imports changes.ui -o changesUi.py
+$ pyrcc4 -py3 view/icons.qrc -o icons_rc.py

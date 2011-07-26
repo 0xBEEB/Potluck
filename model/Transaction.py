@@ -101,21 +101,16 @@ class Transaction:
             tInfo = Pacman.getPkgInfo(app['Name'])
             self.removes[app['Name']] = tInfo
 
-        print('repo Installs')
-        print(self.repoInstalls)
-        print('aur installs')
-        print(self.aurInstalls)
-        print('repo upgrades')
-        print(self.repoUpgrades)
-        print('aur upgrades')
-        print(self.aurUpgrades)
-        print('removes')
-        print(self.removes)
-        print('aur build deps')
-        print(self.aurBuildDepends)
-        print('aur deps')
-        print(self.aurDepends)
-            
+        rDict = {}
+        rDict['repoInstalls'] = self.repoInstalls
+        rDict['aurInstalls'] = self.aurInstalls
+        rDict['repoUpgrades'] = self.repoUpgrades
+        rDict['aurUpgrades'] = self.aurUpgrades
+        rDict['removes'] = self.removes
+        rDict['aurBuildDeps'] = self.aurBuildDepends
+        rDict['aurDeps'] = self.aurDepends
+
+        return rDict
         
 
     #def upgrade(self):
