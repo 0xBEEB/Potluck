@@ -57,21 +57,6 @@ class Transaction:
             if app['repo'] == 'aur':
                 tInfo = Aur.getPkgInfo(app['Name'])
                 self.aurInstalls[app['Name']] = app
-                newU = Aur.Upgrade(app['Name'])
-                for dep in newU.buildDepends:
-                    if dep not in installed:
-                        iDep = Pacman.getPkgInfo(app['Name'])
-                        if isinstance(iDep, dict):
-                            self.aurBuildDepends[app['Name']] = iDep
-                        else:
-                            raise Pacman.PackageError(dep)
-                for dep in newU.depends:
-                    if dep not in installed:
-                        iDep = Pacman.getPkgInfo(app['Name'])
-                        if isinstance(iDep, dict):
-                            self.aurDepends[app['Name']] = iDep
-                        else:
-                            raise Pacman.PackageError(dep)
             else:
                 tInfo = Pacman.getPkgInfo(app['Name'])
                 self.repoInstalls[app['Name']] = tInfo
@@ -79,21 +64,6 @@ class Transaction:
             if app['repo'] == 'aur':
                 tInfo = Aur.getPkgInfo(app['Name'])
                 self.aurUpgrades[app['Name']] = app
-                newU = Aur.Upgrade(app['Name'])
-                for dep in newU.buildDepends:
-                    if dep not in installed:
-                        iDep = Pacman.getPkgInfo(app['Name'])
-                        if isinstance(iDep, dict):
-                            self.aurBuildDepends[app['Name']] = iDep
-                        else:
-                            raise Pacman.PackageError(dep)
-                for dep in newU.depends:
-                    if dep not in installed:
-                        iDep = Pacman.getPkgInfo(app['Name'])
-                        if isinstance(iDep, dict):
-                            self.aurDepends[app['Name']] = iDep
-                        else:
-                            raise Pacman.PackageError(dep)
             else:
                 tInfo = Pacman.getPkgInfo(app['Name'])
                 self.repoUpgrades[app['Name']] = tInfo

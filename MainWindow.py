@@ -245,10 +245,18 @@ class Main(QMainWindow):
         self.handleChanges()
         t = Transaction()
         changes = t.changeList(self.installList, self.upgradeList, self.removeList)
-        cWin = ChangeWin(self)
-        cWin.setChanges(changes)
-        cWin.show()
+        self.cWin = ChangeWin(self)
+        QObject.connect(self.cWin, SIGNAL('accepted()'), self.commitChanges)
+        QObject.connect(self.cWin, SIGNAL('rejected()'), self.noChanges)
+        self.cWin.setChanges(changes)
+        self.cWin.show()
+
+    def noChanges(self):
+        self.cWin.hide()
          
+
+    def commitChanges(self):
+        print('Yeaaahh!')
 
 
     def checkQuit(self):
