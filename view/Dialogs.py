@@ -54,6 +54,26 @@ class syncDialog(QProgressDialog):
         self.resize(220,120)
         self.setWindowTitle("Syncing...")
 
+
+
+
+class commitDialog(QProgressDialog):
+    def __init__(self, parent):
+        QProgressDialog.__init__(self, parent)
+        statusString = str('Preparing Changes')
+        statusLabel = QLabel(statusString)
+        self.setLabel(statusLabel)
+        self.setWindowModality(Qt.WindowModal)
+        self.setAutoReset(True)
+        self.setAutoClose(True)
+        self.setMinimum(0)
+        self.setMaximum(0)
+        self.resize(220,120)
+        self.setWindowTitle("Commiting Changes")
+
+
+
+
 class notRoot(QMessageBox):
     def __init__(self, parent):
         QMessageBox.__init__(self, parent)

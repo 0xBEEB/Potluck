@@ -30,14 +30,16 @@ from PyQt4.QtCore import *
 from view.mwUi import Ui_MainWindow
 from view.Dialogs import searchDialog
 from view.Dialogs import syncDialog
+from view.Dialogs import commitDialog
 from view.Dialogs import notRoot
 
 from view.Changes import ChangeWin
 
+from model.Transaction import Transaction
+
 import os, sys, time
 import string
 import shlex, subprocess
-from model.Transaction import Transaction
 
 class Main(QMainWindow):
     def __init__(self):
@@ -242,6 +244,7 @@ class Main(QMainWindow):
 
 
     def applyChanges(self):
+        self.commit = False
         self.handleChanges()
         t = Transaction()
         changes = t.changeList(self.installList, self.upgradeList, self.removeList)
@@ -256,7 +259,48 @@ class Main(QMainWindow):
          
 
     def commitChanges(self):
-        print('Yeaaahh!')
+        tLen = len(self.installList) + len(self.upgradeList) + len(self.removeList)
+        self.commitWin = commitDialog()
+        self.commitWin.show()
+        self.commitWin.setValue(0)
+        if len(self.removeList) > 0:
+            self.commitWin.setLabel(QLabel(str('Removing Packages')))
+            self.commitRemoves()
+        if len(self.upgradeList) > 0:
+            self.commitWin.setLabel(QLabel(str('Upgrading Packages')))
+            self.commitUpgrades()
+        if len(self.installList) > 0:
+            self.commitWin.setLabel(QLabel(str('Installing Packages')))
+            self.commitInstalls()
+
+
+    def commitRemoves(self):
+        for app in self.removeList:
+            try:
+                self.commitWin.setLabel(QLabel(str('Removing ' + app['Name'])))
+                Pacman.remove(app['Name'])
+            except:
+                pass
+
+
+    def commitUpgrades(self):
+        for app in self.upgradeList:
+            try:
+                self.commitWin.setLabel(QLabel(str('Upgrading ' + app['Name'])))
+                Pacman.install(app['Name'])
+            except:
+                pass
+
+
+    def installUpgrades(self):
+        for app in self.installList:
+            try:
+                self.commitWin.setLabel(QLabel(str('Installing ' + app['Name'])))
+                Pacman.install(app['Name'])
+            except:
+                pass
+        
+        
 
 
     def checkQuit(self):
