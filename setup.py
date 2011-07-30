@@ -46,7 +46,7 @@ setup(
         "License :: OSI Approved :: GNU General Public License (GPL)",
     ],
     include_package_data = True,
-    package_data = {'src':['view/icons/*', 'view/*.ui', 'view/*.qrc', 'model/*.sh', 'model/scripts/*'],'':['COPYING', 'README']},
+    package_data = {'src':['potluck', 'view/icons/*', 'view/*.ui', 'view/*.qrc', 'model/*.sh', 'model/scripts/*'],'':['COPYING', 'README']},
 )                          
 
 # vim: set ts=4 sw=4 noet:
