@@ -83,7 +83,26 @@ class Transaction:
         return rDict
         
 
-    #def upgrade(self):
+    def upgrade(self, app):
+        installedList = Pacman.getInstalled()
+        if app['repo'] == 'aur':
+            upgrade = Aur.Upgrade(app['Name'])
+            for bDep in upgrade.buildDepends:
+                if bDep not in installedList:
+                    recTransaction = Transaction()
+                    recTransaction.upgrade(bDep)
+            for dep in upgrade.depends:
+                if dep not in installedList:
+                    recTransaction = Transaction()
+                    recTransaction.upgrade(dep)
+            upgrade.makePkg()
+            Pacman.installLocal(app['Name'])
+        else:
+            try:
+                Pacman.install(app['Name'])
+            except:
+                pass
+        
 
 
     def query(self, term):

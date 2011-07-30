@@ -325,7 +325,8 @@ class Main(QMainWindow):
         for app in self.removeList:
             try:
                 self.commitWin.setLabel(QLabel(str('Removing ' + app['Name'])))
-                Pacman.remove(app['Name'])
+                trans = Transaction()
+                trans.remove(app['Name'])
             except:
                 pass
 
@@ -336,7 +337,8 @@ class Main(QMainWindow):
         for app in self.upgradeList:
             try:
                 self.commitWin.setLabel(QLabel(str('Upgrading ' + app['Name'])))
-                Pacman.install(app['Name'])
+                trans = Transaction()
+                trans.upgrade(app)
             except:
                 pass
 
@@ -347,6 +349,8 @@ class Main(QMainWindow):
         for app in self.installList:
             try:
                 self.commitWin.setLabel(QLabel(str('Installing ' + app['Name'])))
+                trans = Transaction()
+                trans.upgrade(app)
                 Pacman.install(app['Name'])
             except:
                 pass

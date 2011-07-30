@@ -98,6 +98,15 @@ def install(name):
         raise PackageError("Package does not exist")
 
 
+def installLocal(name):
+    if (os.geteuid() != 0):
+        raise PackageError("Must be root to perform this action")
+    else:
+        retValue = subprocess.call(["pacman", "-U", "--noconfirm", name])
+    if retValue != 0:
+        raise PackageError("Package does not exist")
+
+
 def getPkgInfo(name):
     d = {}
     try:
