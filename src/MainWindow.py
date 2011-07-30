@@ -382,7 +382,7 @@ class runQuery(QThread):
         """Runs query in a seperate thread.
         """
         self.t = Transaction()
-        self.t.query_string = str(mw.ui.queryEdit.text())
+        self.t.query_string = str(self.mw.ui.queryEdit.text())
         self.t.query(self.t.query_string)
         self.emit(SIGNAL('update(PyQt_PyObject)'), self.t)
         return
