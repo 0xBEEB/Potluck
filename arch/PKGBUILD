@@ -1,0 +1,23 @@
+# Maintainer: Thomas Schreiber <ubiquill@gmail.com>
+pkgname=potluck 
+pkgver=0.1
+pkgrel=1
+pkgdesc="A GUI front-end for Pacman and the AUR."
+arch=('i686' 'x86_64')
+url="http://ubiquill.github.com/potluck"
+license=('GPL')
+depends=('pacman' 'makepkg' 'python3' 'qt>=4.4' 'python2-pyqt>=4.4')
+makedepends=('git')
+install=
+changelog=
+source=()
+noextract=()
+md5sums=() 
+
+build() {
+
+  git clone git git@github.com:ubiquill/Potluck.git
+  cd potluck
+  python3 setup.py
+}
+
