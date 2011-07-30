@@ -285,7 +285,10 @@ class Main(QMainWindow):
     def applyChanges(self):
         """Displays changes and commits them.
         """
-        self.commit = False
+        if os.geteuid() != 0:
+            self.notroot = notRoot(self)
+            QMessageBox.open(self.notroot)
+            return
         self.handleChanges()
         t = Transaction()
         changes = t.changeList(self.installList, self.upgradeList, self.removeList)
