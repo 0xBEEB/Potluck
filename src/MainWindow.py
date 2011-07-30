@@ -25,8 +25,11 @@
 #
 # The main window for potluck, an AUR GUI frontend.
 
+# PyQt4 objects and functions
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
+
+# UI components
 from view.mwUi import Ui_MainWindow
 from view.Dialogs import searchDialog
 from view.Dialogs import syncDialog
@@ -35,15 +38,26 @@ from view.Dialogs import notRoot
 
 from view.Changes import ChangeWin
 
+# Package management
 from model.Transaction import Transaction
 
+# General Python Libraries
 import os, sys, time
 import string
 import shlex, subprocess
 
 class Main(QMainWindow):
-    def __init__(self):
+    """The main window of the application.
+    :param QMainWindow: A Qt parent class for Main Windows.
+    """
+
+
+    def __init__(self, app):
+        """Initialize the window.
+        :param app: Parent Qt application.
+        """
         QMainWindow.__init__(self)
+        self.app = app
 
         self.ui=Ui_MainWindow()
         self.ui.setupUi(self)
@@ -64,6 +78,8 @@ class Main(QMainWindow):
 
 
     def makeConnections(self):
+        """Connects signals and slots for the main window.
+        """
         QObject.connect(self.ui.queryButton, SIGNAL('clicked()'), self.newSearch)
         QObject.connect(self.ui.queryEdit, SIGNAL('returnPressed()'), 
                         self.ui.queryButton, SIGNAL('clicked()'))
@@ -77,6 +93,8 @@ class Main(QMainWindow):
 
 
     def handleChanges(self):
+        """Updates the list of packages when a checkbox is (un)checked.
+        """
         it = QTreeWidgetItemIterator(self.ui.queryList)
         while it.value():
             appName = str(it.value().text(2))
@@ -135,6 +153,9 @@ class Main(QMainWindow):
 
 
     def viewChanges(self):
+        """Displays the list of packages that have been selected to change
+        state.
+        """
         self.ui.queryList.clear()
         for app in list(self.installList.values()):
             item = QTreeWidgetItem([' ', app['repo'], 
@@ -164,6 +185,9 @@ class Main(QMainWindow):
 
 
     def markUpgrades(self):
+        """Finds all packages that can be updated, and marks them for \
+        updating.
+        """
         t = Transaction()
         self.upgrades = t.toBeUpgraded()
         newT = Transaction()
@@ -175,6 +199,8 @@ class Main(QMainWindow):
 
 
     def clearChanges(self):
+        """Clears all changes that have not been commited.
+        """
         self.ui.queryList.clear()
         self.installList.clear()
         self.removeList.clear()
@@ -184,6 +210,8 @@ class Main(QMainWindow):
 
 
     def newSearch(self):
+        """Brings up a dialog while searching occurs.
+        """
         self.busy = searchDialog(self)
         self.ui.queryList.clear()
 
@@ -197,6 +225,8 @@ class Main(QMainWindow):
 
 
     def newSync(self):
+        """Brings up a dialog while syncing package database.
+        """
         if os.geteuid() != 0:
             self.notroot = notRoot(self)
             QMessageBox.open(self.notroot)
@@ -213,15 +243,22 @@ class Main(QMainWindow):
 
 
     def cancelSync(self):
+        """Cancels sync operation.
+        """
         self.thread.terminate()
         self.sync.hide()
 
     def finishSync(self):
+        """Hides sync dialog upon completion of sync operation.
+        """
         self.sync.hide()
 
 
     # contributions by Greg Haynes
     def displaySearch(self, transaction):
+        """Displays the results of a search operation.
+        :param transaction: A transaction initiated for searching.
+        """
         response = transaction.queryResult
         found_exact_match = False
         for q in response:
@@ -239,11 +276,15 @@ class Main(QMainWindow):
 
 
     def cancelSearch(self):
+        """Cancels search and returns user to Main window.
+        """
         self.q.terminate()
         self.q = None
 
 
     def applyChanges(self):
+        """Displays changes and commits them.
+        """
         self.commit = False
         self.handleChanges()
         t = Transaction()
@@ -255,10 +296,14 @@ class Main(QMainWindow):
         self.cWin.show()
 
     def noChanges(self):
+        """Closes the change dialog.
+        """
         self.cWin.hide()
          
 
     def commitChanges(self):
+        """If changes were accepted they are commited.
+        """
         tLen = len(self.installList) + len(self.upgradeList) + len(self.removeList)
         self.commitWin = commitDialog()
         self.commitWin.show()
@@ -275,6 +320,8 @@ class Main(QMainWindow):
 
 
     def commitRemoves(self):
+        """Removes programs marked as such.
+        """
         for app in self.removeList:
             try:
                 self.commitWin.setLabel(QLabel(str('Removing ' + app['Name'])))
@@ -284,6 +331,8 @@ class Main(QMainWindow):
 
 
     def commitUpgrades(self):
+        """Upgrades programs marked as such.
+        """
         for app in self.upgradeList:
             try:
                 self.commitWin.setLabel(QLabel(str('Upgrading ' + app['Name'])))
@@ -292,7 +341,9 @@ class Main(QMainWindow):
                 pass
 
 
-    def installUpgrades(self):
+    def commitInstalls(self):
+        """Installs programs marked as such.
+        """
         for app in self.installList:
             try:
                 self.commitWin.setLabel(QLabel(str('Installing ' + app['Name'])))
@@ -301,21 +352,28 @@ class Main(QMainWindow):
                 pass
         
         
-
-
     def checkQuit(self):
-        app.quit()
+        """Exit the application.
+        """
+        self.app.quit()
+
 
 
 
 class runQuery(QThread):
-    '''Emits update(Transaction()) when complete.'''
+    """Emits update(Transaction()) when complete.
+    :Param QThread: Parent class.
+    """
+
+
     def __init__(self, mw):
         QThread.__init__(self)
         self.mw = mw
 
 
     def run(self):
+        """Runs query in a seperate thread.
+        """
         self.t = Transaction()
         self.t.query_string = str(mw.ui.queryEdit.text())
         self.t.query(self.t.query_string)
@@ -324,30 +382,49 @@ class runQuery(QThread):
         
 
     def begin(self):
+        """Begin new query thread.
+        """
         self.start()
 
 
 
+
 class runSync(QThread):
+    """Thread for syncing the package database.
+    :param QThread: Parent class.
+    """
+
+
     def __init__(self, mw):
+        """Initialize new sync thread.
+        :param mw: MainWindow that created this class.
+        """
         QThread.__init__(self)
         self.mw = mw
 
 
     def run(self):
+        """Run sync thread.
+        """
         self.t = Transaction()
         self.t.sync()
         return
 
 
     def begin(self):
+        """Begin new Thread.
+        """
         self.start()
 
 
 
 
+# Run if called directly
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    mw = Main()
+    mw = Main(app)
     mw.show()
     sys.exit(app.exec_())
+
+
+# vim: set ts=4 sw=4 noet:
