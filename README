@@ -1,6 +1,13 @@
 potluck
-Copyright 2011 Thomas Schreiber <ubiquill@gmail.com>
 
+Copyright © 2011 Thomas Schreiber 
+This program is distributed under the GPLv2 as specified in COPYING
+Lead Developer: Thomas Schreiber <ubiquill@gmail.com>
+Contributing Devolopers:
+    Gregory Haynes
+
+Description
+============
 A front-end to the popular Archlinux package manager, pacman. Potluck manages 
 updates and new package installs for the user in a convenient Qt4 interface. 
 Written in python, potluck takes advantage of the C library functions that are 
@@ -12,7 +19,22 @@ seamlessly integrate the AUR with the rest of the Archlinux repositories. The
 user can vote on build scripts and create their own. Allowing them to be part 
 of the community package "potluck".
 
+Build Instructions
+===================
+It is reccommended that you install potluck by building a package on your
+Archlinux system.
+
+<run as normal user>
+$ makepkg arch/PKGBUILD
+<run as root>
+# pacman -U potluck
+
+Alternatively, potluck can be built in a build folder:
+# python3 setup.py install
+
+
 Qt Designer - Just some notes on Qt Designer
+=============================================
 So I used Qt Designer to create a lot of the ui elements. So, a few commands
 need to be run to update the ui files that Qt Designer creates.
 $ pyuicy --from-imports mw.ui -o mwUi.py
