@@ -62,8 +62,8 @@ class Query:
 
 
     def printQuery(self):
-         """Print the reslut of the Query to stdout.
-         """
+        """Print the reslut of the Query to stdout.
+        """
         for app in self.query:
             print('aur/' + app['Name'] + ' ' + app['Version'])
             print('    ' + app['Description'])
@@ -147,7 +147,7 @@ class Upgrade:
         try:
              retCode = subprocess.call('makepkg -s PKGBUILD')
              return retCode
-       except:
+        except:
              pass
 
 

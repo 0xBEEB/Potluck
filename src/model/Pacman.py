@@ -26,8 +26,8 @@ import os, subprocess
 
 
 class PackageError(Exception):
-     """Exception that is raised when package operations fail.
-     """
+    """Exception that is raised when package operations fail.
+    """
     def __init__(self, value):
         self.value = value
     def __str__(self):

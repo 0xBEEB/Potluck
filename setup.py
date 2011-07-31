@@ -23,7 +23,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os
-from setuptools import setup, find_packages
+from distutils.core import setup
 
 setup(
     name = "potluck",
@@ -34,7 +34,8 @@ setup(
     license = "GPL v2",
     keywords = "pyqt pacman aur package",
     url = "http://ubiquill.github.com/potluck",
-    packages = find_packages(),
+    package_dir = {'potluck': 'src'},
+    packages = ['src', 'src.model', 'src.view'],
     long_description = open(os.path.join(os.path.dirname(__file__), 'README')).read(),
     classifiers = [
         "Development Status :: 1 - Beta",
@@ -45,7 +46,6 @@ setup(
         "Topic :: Package Management :: GUI",
         "License :: OSI Approved :: GNU General Public License (GPL)",
     ],
-    include_package_data = True,
     package_data = {'src':['potluck', 'view/icons/*', 'view/*.ui', 'view/*.qrc', 'model/*.sh', 'model/scripts/*'],'':['COPYING', 'README']},
 )                          
 
