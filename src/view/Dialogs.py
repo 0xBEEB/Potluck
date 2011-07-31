@@ -25,6 +25,8 @@ from PyQt4.QtCore import *
 
 
 class searchDialog(QProgressDialog):
+    """Dialog shown while searching.
+    """
     def __init__(self, parent):
         QProgressDialog.__init__(self, parent)
         #QProgressDialog(QString("Searching..."), QString("Cancel"), 0, 0, self)
@@ -43,6 +45,8 @@ class searchDialog(QProgressDialog):
 
 
 class syncDialog(QProgressDialog):
+    """Dialog shown while syncing.
+    """
     def __init__(self, parent):
         QProgressDialog.__init__(self, parent)
         self.setLabel(QLabel(str("Syncing...")))
@@ -58,6 +62,8 @@ class syncDialog(QProgressDialog):
 
 
 class commitDialog(QProgressDialog):
+    """Dialog shown while commiting changes.
+    """
     def __init__(self, parent):
         QProgressDialog.__init__(self, parent)
         statusString = str('Preparing Changes')
@@ -75,9 +81,16 @@ class commitDialog(QProgressDialog):
 
 
 class notRoot(QMessageBox):
+    """MessageBox shown when operations require escalated priviledges.
+    """
     def __init__(self, parent):
         QMessageBox.__init__(self, parent)
         self.setDefaultButton(QMessageBox.Ok)
         self.setWindowModality(Qt.WindowModal)
         self.setText(str('You must be root to complete this action'))
         self.setWindowTitle("Error")
+
+
+
+
+# vim: set ts=4 sw=4 noet:
