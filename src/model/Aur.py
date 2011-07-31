@@ -34,25 +34,36 @@ AURURL = 'http://aur.archlinux.org'
 class Query:
     """Searches the AUR using the scripting API"""
 
+
     def __init__(self, term):
+        """Initializes an AUR query.
+        :param term: key phrase to search for.
+        """
         self.AURURL = 'http://aur.archlinux.org/rpc.php?type=search&arg='
         self.query = []
         self.search(term)
 
 
     def search(self, term):
+        """Search fhe AUR.
+        :param term: keyword to search for.
+        """
         queryURL = self.AURURL + term
-
         value = urllib.request.urlopen(queryURL).read()
         self.decodeResponse(value.decode("utf-8"))
         
 
     def decodeResponse(self, value):
+        """Decodes JSON from AUR query.
+        :param value: raw JSON input.
+        """
         jsonValue = json.loads(value)
         self.query = jsonValue['results']
 
 
     def printQuery(self):
+         """Print the reslut of the Query to stdout.
+         """
         for app in self.query:
             print('aur/' + app['Name'] + ' ' + app['Version'])
             print('    ' + app['Description'])
@@ -62,8 +73,14 @@ class Query:
 
 
 class Upgrade:
+    """Upgade class used to hold information about AUR upgrade.
+    """
+
 
     def __init__(self, target):
+        """Initializes an upgrade object
+        :param target: Application to upgrade.
+        """
         self.target = target
         self.downloadPkgbuild()
         self.buildDepends = self.getBuildDepends()
@@ -71,11 +88,16 @@ class Upgrade:
 
 
     def downloadPkgbuild(self):
+        """Downloads the PKGBUILD associated with a package.
+        """
         self.AURURL = 'http://aur.archlinux.org'
         self.getPkgInfo()
         self.getPkgbuild()
 
+
     def getPkgInfo(self):
+        """Gets information about a package.
+        """
         AURSearchURL = self.AURURL + '/rpc.php?type=info&arg='
         self.info = []
         infoURL = AURSearchURL + self.target
@@ -85,17 +107,23 @@ class Upgrade:
 
 
     def decodeResponse(self, value):
+        """Decodes JSON response from AUR.
+        """
         self.info = json.loads(value)
         response = self.info['results']
         self.pkgURL = self.AURURL + response['URLPath']
 
 
     def getPkgbuild(self):
+        """Downloads PKGBUILD file.
+        """
         pkgbuildURL = self.AURURL + '/packages/' + self.target + '/PKGBUILD'
         urllib.request.urlretrieve(pkgbuildURL, self.target + '.PKGBUILD')
 
 
     def getDepends(self):
+        """Creates a list of the packages dependency.
+        """
         retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
         dependsString = subprocess.check_output(["./model/getDepends.sh", self.target])
         dependsString = dependsString.decode("utf-8")
@@ -104,6 +132,8 @@ class Upgrade:
 
 
     def getBuildDepends(self):
+        """Creates a list of the packages build dependencies.
+        """
         retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
         dependsString = subprocess.check_output(["./model/getBuildDepends.sh", self.target])
         dependsString = dependsString.decode("utf-8")
@@ -112,12 +142,19 @@ class Upgrade:
 
 
     def makePkg(self):
-        os.system('makepkg -s PKGBUILD')
-
+        """Creates package from PKGBUILD.
+        """
+        try:
+             retCode = subprocess.call('makepkg -s PKGBUILD')
+             return retCode
+       except:
+             pass
 
 
 
 def outOfDate():
+    """Checks AUR packages to see if they are out of date.
+    """
     resultList = []
     updateList = []
     response = {}
@@ -140,11 +177,12 @@ def outOfDate():
                     response['repo'] = 'aur'
                     updateList.append(response)
     return updateList
-     
-        
 
 
 def getPkgInfo(target):
+    """Gather info about the target package.
+    :param target: Application for which to ather information about.
+    """
     AURSearchURL = AURURL + '/rpc.php?type=info&arg='
     info = []
     infoURL = AURSearchURL + target
@@ -156,6 +194,8 @@ def getPkgInfo(target):
 
 
 
+
+# This is for unit testing
 if (__name__ == "__main__"):
   
     if (len(sys.argv) <= 1):
@@ -167,5 +207,8 @@ if (__name__ == "__main__"):
 
     query = QueryAUR(argument)
     query.printQuery()
+
+
+
 
 # vim: set ts=4 sw=4 noet:
