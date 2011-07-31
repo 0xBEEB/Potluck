@@ -27,12 +27,24 @@ from view.changesUi import Ui_changeSummary
 import string
 
 class ChangeWin(QDialog):
+    """A QDialog that lists changes before they are commited.
+    :param QDialog: Parent class.
+    """
+
+
     def __init__(self, parent):
+        """Initialize ChangeWin.
+        :param parent: Caller.
+        """
         QDialog.__init__(self, parent)
         self.ui=Ui_changeSummary()
         self.ui.setupUi(self)
 
+
     def setChanges(self, changeDict):
+        """Add changes to ChangeWin.
+        :param changeDict: Dictionary of changes.
+        """
         installString = ''
         upgradeString = ''
         removeString = ''
@@ -54,3 +66,8 @@ class ChangeWin(QDialog):
         self.ui.toInstallEdit.setText(installString)
         self.ui.toUpgradeEdit.setText(upgradeString)
         self.ui.toRemoveEdit.setText(removeString)
+
+
+
+
+# vim: set ts=4 sw=4 noet:
