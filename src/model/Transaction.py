@@ -20,12 +20,21 @@
 # Potluck
 # by Thomas Schreiber <ubiquill@gmail.com>
 
-from . import Aur
-from . import Pacman
+# TODO: Uporn completion of pyalpm much of this will need to be rewritten
+
 from PyQt4.QtGui import * 
 
+from . import Aur
+from . import Pacman
+
 class Transaction:
+    """An abstraction for interacting with the packaging system.
+    """
+
+
     def __init__(self):
+        """Initialize a new Transaction.
+        """
         self.queryResult = []
         self.repoUpgrades = {}
         self.aurUpgrades = {}
@@ -37,13 +46,20 @@ class Transaction:
         
 
     def sync(self):
+        """Sync local databases with network mirror.
+        """
         Pacman.sync()
 
+
     def getInstalled(self):
+        """Returns a list of installed packages.
+        """
         return Pacman.getInstalled()
 
 
     def toBeUpgraded(self):
+        """Returns list of packages in need of upgrading.
+        """
         pacUpgrade =  Pacman.toBeUpgraded()
         aurUpgrade = Aur.outOfDate()
         for app in aurUpgrade:
@@ -52,6 +68,11 @@ class Transaction:
 
 
     def changeList(self, installList, upgradeList, removeList):
+        """Parses changes.
+        :param installLIst: List of files to install.
+        :param upgradeList: List of files to upgrade.
+        :param removeList: List of files to remove.
+        """
         installed = self.getInstalled()
         for app in  list(installList.values()):
             if app['repo'] == 'aur':
@@ -84,6 +105,9 @@ class Transaction:
         
 
     def upgrade(self, app):
+        """Upgrade a given application.
+        :param app: Application to upgrade.
+        """
         installedList = Pacman.getInstalled()
         if app['repo'] == 'aur':
             upgrade = Aur.Upgrade(app['Name'])
@@ -106,6 +130,9 @@ class Transaction:
 
 
     def query(self, term):
+        """Search for applications whose name and description contain <term>.
+        :param term: Term to match against.
+        """
         result = []
         installedList = Pacman.getInstalled()
 
@@ -138,4 +165,12 @@ class Transaction:
 
 
     def remove(self, app):
+        """Remove given application.
+        :param app: Application to remove.
+        """
         Pacman.remove(app)
+
+
+
+
+# vim: set ts=4 sw=4 noet:
