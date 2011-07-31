@@ -20,16 +20,22 @@
 # Potluck
 # by Thomas Schreiber <ubiquill@gmail.com>
 
+# TODO: this file should be replaced with calls to libalpm/pyalpm
+
 import os, subprocess
 
 
 class PackageError(Exception):
+     """Exception that is raised when package operations fail.
+     """
     def __init__(self, value):
         self.value = value
     def __str__(self):
         return repr(self.value)
 
 class NotFoundError(Exception):
+    """Exception that is raised when a package is not found.
+    """
     def __init__(self, value):
         self.value = value
 
@@ -38,6 +44,8 @@ class NotFoundError(Exception):
 
 
 def sync():
+    """Syncs remote database with the local database.
+    """
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
     else:
@@ -45,6 +53,8 @@ def sync():
 
 
 def getInstalled():
+    """Get a list of installed applications.
+    """
     cmdOutput = subprocess.check_output(["pacman", "-Qeq"])
     cmdOutput = cmdOutput.decode("utf-8")
     installed = cmdOutput.splitlines()
@@ -55,6 +65,8 @@ def getInstalled():
 
 
 def installed(name):
+    """Returns if specific package is installed or not
+    """
     installedList = getInstalled()
     if name in installedList:
         return True
@@ -63,6 +75,9 @@ def installed(name):
 
 
 def remove(name):
+    """Remove given package.
+    :param name: Name of package to remove.
+    """
     if not installed(name):
         raise PackageError(name + ' is not installed.')
     else:
@@ -73,6 +88,8 @@ def remove(name):
 
 
 def upgrade():
+    """Upgrade all packages. This is currently not in use.
+    """
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
     else:
@@ -80,6 +97,8 @@ def upgrade():
 
 
 def toBeUpgraded():
+    """Returns list of packages to be upgraded.
+    """
     result = []
     output = subprocess.check_output(["pacman", "-Quq"])
     output = output.decode("utf-8")
@@ -90,6 +109,9 @@ def toBeUpgraded():
 
 
 def install(name):
+    """Installs a given package.
+    :param name: Name of package to install.
+    """
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
     else:
@@ -99,6 +121,9 @@ def install(name):
 
 
 def installLocal(name):
+    """Install a package located locally.
+    :param name: Name of the package to install.
+    """
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
     else:
@@ -108,6 +133,9 @@ def installLocal(name):
 
 
 def getPkgInfo(name):
+    """Get information about a given package.
+    :param name: Name of package to get information about.
+    """
     d = {}
     try:
         info = subprocess.check_output(["pacman", "-Si", name])
@@ -130,6 +158,9 @@ def getPkgInfo(name):
     
 
 def search(term):
+    """Search for a package.
+    :param term: Term to search for.
+    """
     result = []
 
     try:
@@ -144,3 +175,8 @@ def search(term):
         if match != '':
             result.append(getPkgInfo(match))
     return result
+
+
+
+
+# vim: set ts=4 sw=4 noet:
