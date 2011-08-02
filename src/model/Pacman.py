@@ -100,11 +100,14 @@ def toBeUpgraded():
     """Returns list of packages to be upgraded.
     """
     result = []
-    output = subprocess.check_output(["pacman", "-Quq"])
-    output = output.decode("utf-8")
-    output = output.splitlines()
-    for app in output:
-        result.append(getPkgInfo(app))
+    try:
+        output = subprocess.check_output(["pacman", "-Quq"])
+        output = output.decode("utf-8")
+        output = output.splitlines()
+        for app in output:
+            result.append(getPkgInfo(app))
+    except:
+        result = []
     return result
 
 
