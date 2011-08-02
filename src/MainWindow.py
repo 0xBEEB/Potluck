@@ -308,7 +308,7 @@ class Main(QMainWindow):
         """If changes were accepted they are commited.
         """
         tLen = len(self.installList) + len(self.upgradeList) + len(self.removeList)
-        self.commitWin = commitDialog()
+        self.commitWin = commitDialog(self)
         self.commitWin.show()
         self.commitWin.setValue(0)
         if len(self.removeList) > 0:
