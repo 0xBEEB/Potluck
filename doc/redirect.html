@@ -1,0 +1,38 @@
+<html><head><title>Epydoc Redirect Page</title>
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="pragma" content="no-cache" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+<!--
+var pages = ["PyQt4.QtGui.QPaintDevice.PaintDeviceMetric-c", "PyQt4.QtGui.QMessageBox.StandardButtons-c", "PyQt4.QtGui.QMessageBox.StandardButton-c", "src.view.changesUi.Ui_changeSummary-c", "PyQt4.QtGui.QMessageBox.ButtonRole-c", "src.model.Transaction.Transaction-c", "PyQt4.QtGui.QWidget.RenderFlags-c", "PyQt4.QtGui.QDialog.DialogCode-c", "PyQt4.QtGui.QWidget.RenderFlag-c", "src.model.Pacman.NotFoundError-c", "src.view.protoUi.Ui_MainWindow-c", "src.model.Pacman.PackageError-c", "src.view.Dialogs.commitDialog-c", "src.view.Dialogs.searchDialog-c", "PyQt4.QtGui.QMessageBox.Icon-c", "src.view.Dialogs.syncDialog-c", "src.view.mwUi.Ui_MainWindow-c", "src.view.Changes.ChangeWin-c", "src.view.Dialogs.notRoot-c", "src.MainWindow.runQuery-c", "src.MainWindow.runSync-c", "src.model.Transaction-m", "src.model.Aur.Upgrade-c", "src.MainWindow.Main-c", "src.model.Aur.Query-c", "src.view.changesUi-m", "src.view.icons_rc-m", "src.model.Pacman-m", "src.view.Changes-m", "src.view.Dialogs-m", "src.view.protoUi-m", "src.MainWindow-m", "src.model.Aur-m", "src.view.mwUi-m", "src.model-m", "src.view-m", "src-m"];
+var dottedName = get_anchor();
+if (dottedName) {
+    var target = redirect_url(dottedName);
+    if (target) window.location.replace(target);
+}
+// -->
+</script>
+
+<h3>Epydoc Auto-redirect page</h3>
+
+<p>When javascript is enabled, this page will redirect URLs of
+the form <tt>redirect.html#<i>dotted.name</i></tt> to the
+documentation for the object with the given fully-qualified
+dotted name.</p>
+<p><a id="message"> &nbsp; </a></p>
+
+<script type="text/javascript">
+<!--
+if (dottedName) {
+    var msg = document.getElementById("message");
+    msg.innerHTML = "No documentation found for <tt>"+
+                    dottedName+"</tt>";
+}
+// -->
+</script>
+
+</body>
+</html>
