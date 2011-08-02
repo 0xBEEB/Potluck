@@ -118,7 +118,7 @@ def install(name):
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
     else:
-        retValue = subprocess.call(["pacman", "-S", "--noconfirm", name])
+        retValue = subprocess.call(["pacman", "--noconfirm", "-S", name])
     if retValue != 0:
         raise PackageError("Package does not exist")
 

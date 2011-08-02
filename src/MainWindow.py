@@ -349,6 +349,7 @@ class Main(QMainWindow):
     def commitInstalls(self):
         """Installs programs marked as such.
         """
+        print("got here")
         for app in self.installList:
             try:
                 self.commitWin.setLabel(QLabel(str('Installing ' + app['Name'])))
