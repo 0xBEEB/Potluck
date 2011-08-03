@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>src.view.Changes</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="src-module.html">Package&nbsp;src</a> ::
+        <a href="src.view-module.html">Package&nbsp;view</a> ::
+        Module&nbsp;Changes
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="src.view.Changes-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="src.view.Changes-module.html">Module src.view.Changes</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python3</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># Copyright &#169; 2011 Thomas Schreiber</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># This program is free software; you can redistribute it and/or</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># modify it under the terms of the GNU General Public License</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment"># as published by the Free Software Foundation; either version 2</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"># of the License, or (at your option) any later version.</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"># This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># GNU General Public License for more details.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"># </tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment"># You should have received a copy of the GNU General Public License</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"># along with this program; if not, write to the Free Software</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment"># Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-comment"># by Thomas Schreiber &lt;ubiquill@gmail.com&gt;</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">PyQt4</tt><tt class="py-op">.</tt><tt class="py-name">QtGui</tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">PyQt4</tt><tt class="py-op">.</tt><tt class="py-name">QtCore</tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package src.view=src.view-module.html"><a title="src.view" class="py-name" href="#" onclick="return doclink('link-0', 'view', 'link-0');">view</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module src.view.changesUi=src.view.changesUi-module.html"><a title="src.view.changesUi" class="py-name" href="#" onclick="return doclink('link-1', 'changesUi', 'link-1');">changesUi</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name" targets="Class src.view.changesUi.Ui_changeSummary=src.view.changesUi.Ui_changeSummary-class.html"><a title="src.view.changesUi.Ui_changeSummary" class="py-name" href="#" onclick="return doclink('link-2', 'Ui_changeSummary', 'link-2');">Ui_changeSummary</a></tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">string</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt>
+<a name="ChangeWin"></a><div id="ChangeWin-def"><a name="L29"></a><tt class="py-lineno">29</tt> <a class="py-toggle" href="#" id="ChangeWin-toggle" onclick="return toggle('ChangeWin');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="src.view.Changes.ChangeWin-class.html">ChangeWin</a><tt class="py-op">(</tt><tt class="py-base-class">QDialog</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ChangeWin-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ChangeWin-expanded"><a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt class="py-docstring">"""A QDialog that lists changes before they are commited.</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">    :param QDialog: Parent class.</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="ChangeWin.__init__"></a><div id="ChangeWin.__init__-def"><a name="L35"></a><tt class="py-lineno">35</tt> <a class="py-toggle" href="#" id="ChangeWin.__init__-toggle" onclick="return toggle('ChangeWin.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.view.Changes.ChangeWin-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">parent</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ChangeWin.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ChangeWin.__init__-expanded"><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt class="py-docstring">"""Initialize ChangeWin.</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-docstring">        :param parent: Caller.</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-name">QDialog</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Method src.MainWindow.Main.__init__()=src.MainWindow.Main-class.html#__init__,Method src.MainWindow.runQuery.__init__()=src.MainWindow.runQuery-class.html#__init__,Method src.MainWindow.runSync.__init__()=src.MainWindow.runSync-class.html#__init__,Method src.model.Aur.Query.__init__()=src.model.Aur.Query-class.html#__init__,Method src.model.Aur.Upgrade.__init__()=src.model.Aur.Upgrade-class.html#__init__,Method src.model.Pacman.NotFoundError.__init__()=src.model.Pacman.NotFoundError-class.html#__init__,Method src.model.Pacman.PackageError.__init__()=src.model.Pacman.PackageError-class.html#__init__,Method src.model.Transaction.Transaction.__init__()=src.model.Transaction.Transaction-class.html#__init__,Method src.view.Changes.ChangeWin.__init__()=src.view.Changes.ChangeWin-class.html#__init__,Method src.view.Dialogs.commitDialog.__init__()=src.view.Dialogs.commitDialog-class.html#__init__,Method src.view.Dialogs.notRoot.__init__()=src.view.Dialogs.notRoot-class.html#__init__,Method src.view.Dialogs.searchDialog.__init__()=src.view.Dialogs.searchDialog-class.html#__init__,Method src.view.Dialogs.syncDialog.__init__()=src.view.Dialogs.syncDialog-class.html#__init__"><a title="src.MainWindow.Main.__init__
+src.MainWindow.runQuery.__init__
+src.MainWindow.runSync.__init__
+src.model.Aur.Query.__init__
+src.model.Aur.Upgrade.__init__
+src.model.Pacman.NotFoundError.__init__
+src.model.Pacman.PackageError.__init__
+src.model.Transaction.Transaction.__init__
+src.view.Changes.ChangeWin.__init__
+src.view.Dialogs.commitDialog.__init__
+src.view.Dialogs.notRoot.__init__
+src.view.Dialogs.searchDialog.__init__
+src.view.Dialogs.syncDialog.__init__" class="py-name" href="#" onclick="return doclink('link-3', '__init__', 'link-3');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">parent</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ui</tt><tt class="py-op">=</tt><tt id="link-4" class="py-name"><a title="src.view.changesUi.Ui_changeSummary" class="py-name" href="#" onclick="return doclink('link-4', 'Ui_changeSummary', 'link-2');">Ui_changeSummary</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ui</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Method src.view.changesUi.Ui_changeSummary.setupUi()=src.view.changesUi.Ui_changeSummary-class.html#setupUi,Method src.view.mwUi.Ui_MainWindow.setupUi()=src.view.mwUi.Ui_MainWindow-class.html#setupUi,Method src.view.protoUi.Ui_MainWindow.setupUi()=src.view.protoUi.Ui_MainWindow-class.html#setupUi"><a title="src.view.changesUi.Ui_changeSummary.setupUi
+src.view.mwUi.Ui_MainWindow.setupUi
+src.view.protoUi.Ui_MainWindow.setupUi" class="py-name" href="#" onclick="return doclink('link-5', 'setupUi', 'link-5');">setupUi</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"> </tt>
+<a name="ChangeWin.setChanges"></a><div id="ChangeWin.setChanges-def"><a name="L44"></a><tt class="py-lineno">44</tt> <a class="py-toggle" href="#" id="ChangeWin.setChanges-toggle" onclick="return toggle('ChangeWin.setChanges');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.view.Changes.ChangeWin-class.html#setChanges">setChanges</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">changeDict</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ChangeWin.setChanges-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ChangeWin.setChanges-expanded"><a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-docstring">"""Add changes to ChangeWin.</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-docstring">        :param changeDict: Dictionary of changes.</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-name">installString</tt> <tt class="py-op">=</tt> <tt class="py-string">''</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt class="py-name">upgradeString</tt> <tt class="py-op">=</tt> <tt class="py-string">''</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-name">removeString</tt> <tt class="py-op">=</tt> <tt class="py-string">''</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">app</tt> <tt class="py-keyword">in</tt> <tt class="py-name">changeDict</tt><tt class="py-op">[</tt><tt class="py-string">'repoInstalls'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">            <tt class="py-name">installString</tt> <tt class="py-op">+=</tt> <tt class="py-name">app</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">app</tt> <tt class="py-keyword">in</tt> <tt class="py-name">changeDict</tt><tt class="py-op">[</tt><tt class="py-string">'aurInstalls'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">            <tt class="py-name">installString</tt> <tt class="py-op">+=</tt> <tt class="py-name">app</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">app</tt> <tt class="py-keyword">in</tt> <tt class="py-name">changeDict</tt><tt class="py-op">[</tt><tt class="py-string">'aurBuildDeps'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">            <tt class="py-name">installString</tt> <tt class="py-op">+=</tt> <tt class="py-name">app</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">app</tt> <tt class="py-keyword">in</tt> <tt class="py-name">changeDict</tt><tt class="py-op">[</tt><tt class="py-string">'aurDeps'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">            <tt class="py-name">installString</tt> <tt class="py-op">+=</tt> <tt class="py-name">app</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">app</tt> <tt class="py-keyword">in</tt> <tt class="py-name">changeDict</tt><tt class="py-op">[</tt><tt class="py-string">'repoUpgrades'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">            <tt class="py-name">upgradeString</tt> <tt class="py-op">+=</tt> <tt class="py-name">app</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">app</tt> <tt class="py-keyword">in</tt> <tt class="py-name">changeDict</tt><tt class="py-op">[</tt><tt class="py-string">'aurUpgrades'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">            <tt class="py-name">upgradeString</tt> <tt class="py-op">+=</tt> <tt class="py-name">app</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">app</tt> <tt class="py-keyword">in</tt> <tt class="py-name">changeDict</tt><tt class="py-op">[</tt><tt class="py-string">'removes'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">            <tt class="py-name">removeString</tt> <tt class="py-op">+=</tt> <tt class="py-name">app</tt> <tt class="py-op">+</tt> <tt class="py-string">' '</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ui</tt><tt class="py-op">.</tt><tt class="py-name">toInstallEdit</tt><tt class="py-op">.</tt><tt class="py-name">setText</tt><tt class="py-op">(</tt><tt class="py-name">installString</tt><tt class="py-op">)</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ui</tt><tt class="py-op">.</tt><tt class="py-name">toUpgradeEdit</tt><tt class="py-op">.</tt><tt class="py-name">setText</tt><tt class="py-op">(</tt><tt class="py-name">upgradeString</tt><tt class="py-op">)</tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ui</tt><tt class="py-op">.</tt><tt class="py-name">toRemoveEdit</tt><tt class="py-op">.</tt><tt class="py-name">setText</tt><tt class="py-op">(</tt><tt class="py-name">removeString</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"><tt class="py-comment"># vim: set ts=4 sw=4 noet:</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="src-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Aug  2 10:47:48 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
