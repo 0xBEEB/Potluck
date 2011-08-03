@@ -6,7 +6,7 @@ pkgdesc="A GUI front-end for Pacman and the AUR."
 arch=('i686' 'x86_64')
 url="http://ubiquill.github.com/potluck"
 license=('GPL')
-depends=('pacman' 'makepkg' 'python3' 'qt>=4.4' 'python2-pyqt>=4.4')
+depends=('pacman' 'python3' 'qt>=4.4' 'python2-pyqt>=4.4')
 makedepends=('git')
 install=
 changelog=
@@ -15,9 +15,20 @@ noextract=()
 md5sums=() 
 
 build() {
-
-  git clone git git@github.com:ubiquill/Potluck.git
-  cd potluck
-  python3 setup.py
+  mkdir -p ${pkgdir}/usr/{bin/,lib/}
+  mkdir -p ${pkgdir}/usr/lib/potluck/
+  mkdir -p ${pkgdir}/usr/lib/potluck/view/
+  mkdir -p ${pkgdir}/usr/lib/potluck/view/icons/
+  mkdir -p ${pkgdir}/usr/lib/potluck/model/
+  wget http://github.com/ubiquill/Potluck/tarball/master
+  mv master potluck.tar.gz
+  tar xzf potluck.tar.gz
+  cd ubiquill-Potluck*
+  install -D -m0755 src/MainWindow.py ${pkgdir}/usr/lib/potluck || return 1
+  install -D -m0755 src/potluck ${pkgdir}/usr/lib/potluck || return 1
+  install -D -m0755 src/model/* ${pkgdir}/usr/lib/potluck/model || return 1
+  install -D -m0755 src/view/*.py ${pkgdir}/usr/lib/potluck/view || return 1
+  install -D -m0755 src/view/icons/* ${pkgdir}/usr/lib/potluck/view/icons || return 1
+  ln -s ${pkgdir}/usr/lib/potluck/potluck ${pkgdir}/usr/bin/potluck
 }
 
