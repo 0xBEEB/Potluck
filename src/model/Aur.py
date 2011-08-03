@@ -83,6 +83,8 @@ class Upgrade:
         """
         self.target = target
         self.downloadPkgbuild()
+        if not os.path.exists(target):
+            os.makedirs(target)
         self.buildDepends = self.getBuildDepends()
         self.depends = self.getDepends()
 
@@ -117,38 +119,54 @@ class Upgrade:
     def getPkgbuild(self):
         """Downloads PKGBUILD file.
         """
+        if not os.path.exists(self.target):
+            os.makedirs(self.target)
+        os.chdir(self.target)
         pkgbuildURL = self.AURURL + '/packages/' + self.target + '/PKGBUILD'
-        urllib.request.urlretrieve(pkgbuildURL, self.target + '.PKGBUILD')
+        urllib.request.urlretrieve(pkgbuildURL, 'PKGBUILD')
+        os.chdir('../')
 
 
     def getDepends(self):
         """Creates a list of the packages dependency.
         """
-        retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
-        dependsString = subprocess.check_output(["./model/getDepends.sh", self.target])
+        if not os.path.exists(self.target):
+            os.makedirs(self.target)
+        os.chdir(self.target)
+        retCode = subprocess.call(["chmod", "+x", "PKGBUILD"])
+        dependsString = subprocess.check_output(["../model/getDepends.sh"])
         dependsString = dependsString.decode("utf-8")
         depends = list(dependsString.split())
+        os.chdir('../')
         return depends
 
 
     def getBuildDepends(self):
         """Creates a list of the packages build dependencies.
         """
-        retCode = subprocess.call(["chmod", "+x", self.target + ".PKGBUILD"])
-        dependsString = subprocess.check_output(["./model/getBuildDepends.sh", self.target])
+        if not os.path.exists(self.target):
+            os.makedirs(self.target)
+        os.chdir(self.target)
+        retCode = subprocess.call(["chmod", "+x", "PKGBUILD"])
+        dependsString = subprocess.check_output(["../model/getBuildDepends.sh"])
         dependsString = dependsString.decode("utf-8")
         buildDepends = list(dependsString.split())
+        os.chdir('../')
         return buildDepends
 
 
     def makePkg(self):
         """Creates package from PKGBUILD.
         """
+        if not os.path.exists(self.target):
+            os.makedirs(self.target)
+        os.chdir(self.target)
         try:
-             retCode = subprocess.call('makepkg -s PKGBUILD')
+             retCode = subprocess.call('makepkg', '--asroot', '-s')
              return retCode
         except:
              pass
+        os.chdir('../')
 
 
 
@@ -190,6 +208,7 @@ def getPkgInfo(target):
     value = urllib.request.urlopen(infoURL).read()
     info = json.loads(value.decode("utf-8"))
     response = info['results']
+    response['repo'] = 'aur'
     return response
 
 

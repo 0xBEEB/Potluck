@@ -130,7 +130,11 @@ def installLocal(name):
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
     else:
+        if not os.path.exists(name):
+            os.makedirs(name)
+        os.chdir(name)
         retValue = subprocess.call(["pacman", "-U", "--noconfirm", name])
+        os.chdir('../')
     if retValue != 0:
         raise PackageError("Package does not exist")
 

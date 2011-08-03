@@ -108,18 +108,27 @@ class Transaction:
         """Upgrade a given application.
         :param app: Application to upgrade.
         """
+        if not isinstance(app, dict):
+            return
         installedList = Pacman.getInstalled()
-        if app['repo'] == 'aur':
+        if app['repo'] == "aur":
             upgrade = Aur.Upgrade(app['Name'])
             for bDep in upgrade.buildDepends:
                 if bDep not in installedList:
                     recTransaction = Transaction()
-                    recTransaction.upgrade(bDep)
+                    r = Pacman.getPkgInfo(bDep)
+                    if r == None:
+                        r = Aur.getPkgInfo(bDep)
+                    recTransaction.upgrade(r)
             for dep in upgrade.depends:
                 if dep not in installedList:
                     recTransaction = Transaction()
-                    recTransaction.upgrade(dep)
-            upgrade.makePkg()
+                    r = Pacman.getPkgInfo(bDep)
+                    if r == None:
+                        r = Aur.getPkgInfo(bDep)
+                    recTransaction.upgrade(r)
+            if upgrade.makePkg() != 0:
+                raise PackageError('makepkg failed')
             Pacman.installLocal(app['Name'])
         else:
             try:

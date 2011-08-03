@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-. ./$1.PKGBUILD
+. ./PKGBUILD
 echo ${makedepends[*]}
