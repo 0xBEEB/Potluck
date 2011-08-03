@@ -205,6 +205,9 @@ class Main(QMainWindow):
         self.installList.clear()
         self.removeList.clear()
         self.upgradeList.clear()
+        t = Transaction()
+        self.installed = t.getInstalled()
+        self.upgrades = {}
         self.handleChanges()
 
 
@@ -320,16 +323,18 @@ class Main(QMainWindow):
         if len(self.installList) > 0:
             self.commitWin.setLabel(QLabel(str('Installing Packages')))
             self.commitInstalls()
+        self.commitWin.hide()
+        self.clearChanges()
 
 
     def commitRemoves(self):
         """Removes programs marked as such.
         """
-        for app in self.removeList:
+        for app in self.removeList.values():
             try:
                 self.commitWin.setLabel(QLabel(str('Removing ' + app['Name'])))
                 trans = Transaction()
-                trans.remove(app['Name'])
+                trans.remove(app)
             except:
                 pass
 
@@ -337,7 +342,7 @@ class Main(QMainWindow):
     def commitUpgrades(self):
         """Upgrades programs marked as such.
         """
-        for app in self.upgradeList:
+        for app in self.upgradeList.values():
             try:
                 self.commitWin.setLabel(QLabel(str('Upgrading ' + app['Name'])))
                 trans = Transaction()
@@ -349,13 +354,11 @@ class Main(QMainWindow):
     def commitInstalls(self):
         """Installs programs marked as such.
         """
-        print("got here")
-        for app in self.installList:
+        for app in self.installList.values():
+            self.commitWin.setLabel(QLabel(str('Installing ' + app['Name'])))
+            trans = Transaction()
             try:
-                self.commitWin.setLabel(QLabel(str('Installing ' + app['Name'])))
-                trans = Transaction()
                 trans.upgrade(app)
-                Pacman.install(app['Name'])
             except:
                 pass
         

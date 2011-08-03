@@ -168,7 +168,8 @@ class Transaction:
         """Remove given application.
         :param app: Application to remove.
         """
-        Pacman.remove(app)
+        name = app['Name']
+        Pacman.remove(name)
 
 
 

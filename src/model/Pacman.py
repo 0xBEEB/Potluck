@@ -84,7 +84,7 @@ def remove(name):
         if (os.geteuid() != 0):
             raise PackageError("Must be root to perform this action")
         else:
-            output = subprocess.check_output(["pacman", "-R", "--noconfirm", name])
+            output = subprocess.call(["pacman", "--noconfirm", "-R", name])
 
 
 def upgrade():
@@ -93,7 +93,7 @@ def upgrade():
     if (os.geteuid() != 0):
         raise PackageError("Must be root to perform this action")
     else:
-        output = subprocess.check_output(["pacman", "-Syyu", "--noconfirm"])
+        output = subprocess.call(["pacman", "-Syyu", "--noconfirm"])
 
 
 def toBeUpgraded():
