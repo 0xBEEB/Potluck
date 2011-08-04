@@ -72,6 +72,9 @@ Style
    # contributions from Joe Smith <jsmith@email.com>
    def func():
        ...
+6. All new functions and classes need to have a doc string containing
+   information about what it does and a list of parameters NOT including
+   the self parameter.
 
 
 
