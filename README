@@ -111,3 +111,7 @@ src/
             |----mwUi.py                    // Auto-generated py file
             |----proto.ui                   // QtDesigner file
             |----protoUi.py                 // Auto-generated py file
+
+TODO:
+------
+Nothing right now
